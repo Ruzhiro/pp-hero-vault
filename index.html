@@ -7,203 +7,230 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0d0d0d; --paper: #f5f0e8; --panel: #1a1a2e;
-    --accent: #e63946; --gold: #f4a261; --muted: #6b6b7b;
-    --border: #c8bfa8; --field-bg: #fff9f0; --tag-bg: #e8e0d0;
+    --ink:#0d0d0d;--paper:#f5f0e8;--panel:#1a1a2e;
+    --accent:#e63946;--gold:#f4a261;--muted:#6b6b7b;
+    --border:#c8bfa8;--field-bg:#fff9f0;--tag-bg:#e8e0d0;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Barlow', sans-serif; background: var(--panel); min-height: 100vh; color: var(--ink); }
-  #app { display: flex; height: 100vh; overflow: hidden; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Barlow',sans-serif;background:var(--panel);min-height:100vh;color:var(--ink);}
+  #app{display:flex;height:100vh;overflow:hidden;}
 
   /* SIDEBAR */
-  #sidebar { width: 260px; min-width: 260px; background: #12121f; display: flex; flex-direction: column; border-right: 2px solid #2a2a3e; overflow: hidden; }
-  .sidebar-header { padding: 20px 18px 14px; border-bottom: 1px solid #2a2a3e; }
-  .sidebar-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--accent); line-height: 1; }
-  .sidebar-header p { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: #5a5a7a; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
-  #char-list { flex: 1; overflow-y: auto; padding: 10px; }
-  #char-list::-webkit-scrollbar { width: 4px; }
-  #char-list::-webkit-scrollbar-thumb { background: #2a2a3e; border-radius: 2px; }
-  .char-item { padding: 10px 12px; border-radius: 6px; cursor: pointer; margin-bottom: 4px; transition: background 0.15s; display: flex; align-items: center; gap: 10px; border: 1px solid transparent; }
-  .char-item:hover { background: #1e1e35; }
-  .char-item.active { background: #1e1e35; border-color: var(--accent); }
-  .char-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: #fff; flex-shrink: 0; }
-  .char-info { flex: 1; min-width: 0; }
-  .char-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: #e8e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .char-alias { font-size: 11px; color: #5a5a7a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .char-delete { width: 22px; height: 22px; border: none; background: transparent; color: #3a3a5a; cursor: pointer; font-size: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s, background 0.15s; }
-  .char-delete:hover { color: var(--accent); background: rgba(230,57,70,0.1); }
-  .sidebar-footer { padding: 12px 10px; border-top: 1px solid #2a2a3e; display: flex; flex-direction: column; gap: 8px; }
-  #btn-new { width: 100%; padding: 10px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1.5px; cursor: pointer; transition: background 0.15s; }
-  #btn-new:hover { background: #c1121f; }
-  #btn-import { width: 100%; padding: 8px; background: transparent; color: #5a5a7a; border: 1.5px dashed #2a2a3e; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
-  #btn-import:hover { border-color: var(--gold); color: var(--gold); }
+  #sidebar{width:260px;min-width:260px;background:#12121f;display:flex;flex-direction:column;border-right:2px solid #2a2a3e;overflow:hidden;}
+  .sidebar-header{padding:20px 18px 14px;border-bottom:1px solid #2a2a3e;}
+  .sidebar-header h1{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--accent);line-height:1;}
+  .sidebar-header p{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:#5a5a7a;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+  #char-list{flex:1;overflow-y:auto;padding:10px;}
+  #char-list::-webkit-scrollbar{width:4px;}
+  #char-list::-webkit-scrollbar-thumb{background:#2a2a3e;border-radius:2px;}
+  .char-item{padding:10px 12px;border-radius:6px;cursor:pointer;margin-bottom:4px;transition:background .15s;display:flex;align-items:center;gap:10px;border:1px solid transparent;}
+  .char-item:hover{background:#1e1e35;}
+  .char-item.active{background:#1e1e35;border-color:var(--accent);}
+  .char-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;flex-shrink:0;}
+  .char-info{flex:1;min-width:0;}
+  .char-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:#e8e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .char-alias{font-size:11px;color:#5a5a7a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .char-delete{width:22px;height:22px;border:none;background:transparent;color:#3a3a5a;cursor:pointer;font-size:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:color .15s,background .15s;}
+  .char-delete:hover{color:var(--accent);background:rgba(230,57,70,.1);}
+  .sidebar-footer{padding:12px 10px;border-top:1px solid #2a2a3e;display:flex;flex-direction:column;gap:8px;}
+  #btn-new{width:100%;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:background .15s;}
+  #btn-new:hover{background:#c1121f;}
+  #btn-import{width:100%;padding:8px;background:transparent;color:#5a5a7a;border:1.5px dashed #2a2a3e;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .15s;}
+  #btn-import:hover{border-color:var(--gold);color:var(--gold);}
 
   /* MAIN */
-  #main { flex: 1; overflow-y: auto; background: var(--paper); }
-  #main::-webkit-scrollbar { width: 6px; }
-  #main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  #main{flex:1;overflow-y:auto;background:var(--paper);}
+  #main::-webkit-scrollbar{width:6px;}
+  #main::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
   /* EMPTY */
-  #empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); text-align: center; padding: 40px; }
-  .empty-icon { font-size: 64px; margin-bottom: 20px; opacity: 0.3; }
-  #empty-state h2 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; color: var(--border); margin-bottom: 8px; }
-  #empty-state p { font-size: 14px; color: var(--muted); }
+  #empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);text-align:center;padding:40px;}
+  .empty-icon{font-size:64px;margin-bottom:20px;opacity:.3;}
+  #empty-state h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--border);margin-bottom:8px;}
+  #empty-state p{font-size:14px;color:var(--muted);}
 
   /* SHEET */
-  #sheet { display: none; }
-  #sheet.visible { display: block; }
-  .sheet-topbar { background: var(--ink); padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
-  .sheet-topbar-left { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--accent); }
-  .topbar-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .btn-save { padding: 7px 18px; background: var(--accent); color: #fff; border: none; border-radius: 5px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: background 0.15s; }
-  .btn-save:hover { background: #c1121f; }
-  .btn-save:disabled { background: #6b2a30; cursor: default; }
-  .btn-share { padding: 7px 14px; background: #1e1e35; color: var(--gold); border: 1.5px solid #3a3a5a; border-radius: 5px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
-  .btn-share:hover { border-color: var(--gold); }
-  .save-indicator { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: #5a5a7a; letter-spacing: 0.5px; }
-  .save-indicator.saved { color: #4caf50; }
-  .save-indicator.error { color: var(--accent); }
-  .readonly-badge { background: #2a2a3e; color: var(--gold); border: 1px solid #3a3a5a; border-radius: 4px; padding: 4px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+  #sheet{display:none;}
+  #sheet.visible{display:block;}
+  .sheet-topbar{background:var(--ink);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+  .sheet-topbar-left{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--accent);}
+  .topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .btn-save{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:5px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer;transition:background .15s;}
+  .btn-save:hover{background:#c1121f;}
+  .btn-save:disabled{background:#6b2a30;cursor:default;}
+  .btn-share{padding:7px 14px;background:#1e1e35;color:var(--gold);border:1.5px solid #3a3a5a;border-radius:5px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer;transition:all .15s;}
+  .btn-share:hover{border-color:var(--gold);}
+  .save-indicator{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#5a5a7a;letter-spacing:.5px;}
+  .save-indicator.saved{color:#4caf50;}
+  .readonly-badge{background:#2a2a3e;color:var(--gold);border:1px solid #3a3a5a;border-radius:4px;padding:4px 10px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;}
 
   /* GAME TITLE */
-  .game-title-banner { background: var(--ink); padding: 20px 32px 16px; text-align: center; border-bottom: 3px solid var(--accent); }
-  .game-title-main { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 9px; color: #fff; line-height: 1; }
-  .game-title-main span { color: var(--accent); }
-  .game-title-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 4px; color: #5a5a7a; text-transform: uppercase; margin-top: 4px; }
+  .game-title-banner{background:var(--ink);padding:20px 32px 16px;text-align:center;border-bottom:3px solid var(--accent);}
+  .game-title-main{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:9px;color:#fff;line-height:1;}
+  .game-title-main span{color:var(--accent);}
+  .game-title-sub{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:4px;color:#5a5a7a;text-transform:uppercase;margin-top:4px;}
 
-  .sheet-content { padding: 28px 32px 60px; max-width: 960px; margin: 0 auto; }
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-bottom: 14px; margin-top: 28px; }
-  .field-group { display: flex; flex-direction: column; gap: 4px; }
-  .field-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
-  .field-input { background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 5px; padding: 7px 10px; font-family: 'Barlow', sans-serif; font-size: 14px; color: var(--ink); transition: border-color 0.15s; width: 100%; }
-  .field-input:focus { outline: none; border-color: var(--accent); background: #fff; }
-  .field-input:disabled { opacity: 0.6; cursor: not-allowed; }
-  textarea.field-input { resize: vertical; min-height: 60px; line-height: 1.5; }
-  .identity-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .identity-grid .full { grid-column: 1 / -1; }
-  .identity-grid .half { grid-column: span 1; }
+  .sheet-content{padding:28px 32px 60px;max-width:960px;margin:0 auto;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:4px;margin-bottom:14px;margin-top:28px;}
+
+  /* FIELDS */
+  .field-group{display:flex;flex-direction:column;gap:4px;}
+  .field-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+  .field-input{background:var(--field-bg);border:1.5px solid var(--border);border-radius:5px;padding:7px 10px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--ink);transition:border-color .15s;width:100%;}
+  .field-input:focus{outline:none;border-color:var(--accent);background:#fff;}
+  .field-input:disabled{opacity:.6;cursor:not-allowed;}
+
+  /* AUTO-GROW TEXTAREA — key: no resize, overflow hidden, rows handled by JS */
+  textarea.field-input{resize:none;overflow:hidden;min-height:38px;line-height:1.5;}
+  textarea.field-input-sm{resize:none;overflow:hidden;min-height:32px;line-height:1.5;}
+
+  /* IDENTITY */
+  .identity-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .identity-grid .full{grid-column:1/-1;}
+  .identity-grid .half{grid-column:span 1;}
 
   /* PORTRAITS */
-  .portrait-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto; }
-  .portrait-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
-  .portrait-frame { width: 135px; height: 180px; border: 2px dashed var(--border); border-radius: 6px; background: var(--field-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: border-color 0.2s; }
-  .portrait-frame:hover { border-color: var(--accent); }
-  .portrait-frame.readonly { cursor: default; }
-  .portrait-frame.readonly:hover { border-color: var(--border); }
-  .portrait-frame img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-  .portrait-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--border); pointer-events: none; }
-  .portrait-placeholder svg { width: 32px; height: 32px; opacity: 0.5; }
-  .portrait-placeholder span { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1px; opacity: 0.6; }
-  .portrait-clear { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.6); color: #fff; border: none; font-size: 12px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 2; line-height: 1; }
-  .portrait-frame:hover .portrait-clear { display: flex; }
-  .portrait-file { display: none; }
+  .portrait-slot{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto;}
+  .portrait-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+  .portrait-frame{width:135px;height:180px;border:2px dashed var(--border);border-radius:6px;background:var(--field-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:border-color .2s;}
+  .portrait-frame:hover{border-color:var(--accent);}
+  .portrait-frame.readonly{cursor:default;}
+  .portrait-frame.readonly:hover{border-color:var(--border);}
+  .portrait-frame img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+  .portrait-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--border);pointer-events:none;}
+  .portrait-placeholder svg{width:32px;height:32px;opacity:.5;}
+  .portrait-placeholder span{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;opacity:.6;}
+  .portrait-clear{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;font-size:12px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;line-height:1;}
+  .portrait-frame:hover .portrait-clear{display:flex;}
+  .portrait-file{display:none;}
 
   /* ORIGIN */
-  .origin-group-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; display: block; }
-  .origin-options { display: flex; flex-wrap: wrap; gap: 7px; }
-  .origin-btn { padding: 5px 13px; border: 1.5px solid var(--border); border-radius: 20px; background: var(--field-bg); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s; letter-spacing: 0.5px; }
-  .origin-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
-  .origin-btn.selected { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-  .origin-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+  .origin-group-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:block;}
+  .origin-options{display:flex;flex-wrap:wrap;gap:7px;}
+  .origin-btn{padding:5px 13px;border:1.5px solid var(--border);border-radius:20px;background:var(--field-bg);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;letter-spacing:.5px;}
+  .origin-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+  .origin-btn.selected{background:var(--gold);border-color:var(--gold);color:var(--ink);}
+  .origin-btn:disabled{cursor:not-allowed;opacity:.6;}
 
   /* ABILITIES */
-  .abilities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .ability-card { background: var(--ink); border-radius: 8px; padding: 14px 14px 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .ability-name { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--gold); }
-  .ability-score-input { background: #2a2a3e; border: 1.5px solid #3a3a5a; border-radius: 5px; padding: 6px 10px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8e8f0; width: 100%; text-align: center; transition: border-color 0.15s; }
-  .ability-score-input:focus { outline: none; border-color: var(--accent); }
-  .ability-score-input:disabled { opacity: 0.6; cursor: not-allowed; }
-  .ability-score-input::placeholder { color: #3a3a5a; font-size: 13px; letter-spacing: 0; }
-  .ability-desc-input { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 4px; padding: 5px 8px; font-size: 11px; color: #8888aa; width: 100%; font-family: 'Barlow', sans-serif; resize: none; min-height: 36px; line-height: 1.4; }
-  .ability-desc-input:focus { outline: none; border-color: #4a4a6a; }
-  .ability-desc-input:disabled { opacity: 0.6; cursor: not-allowed; }
-  .ability-desc-input::placeholder { color: #3a3a5a; }
+  .abilities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .ability-card{background:var(--ink);border-radius:8px;padding:14px 14px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .ability-name{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);}
+  .ability-score-input{background:#2a2a3e;border:1.5px solid #3a3a5a;border-radius:5px;padding:6px 10px;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e8f0;width:100%;text-align:center;transition:border-color .15s;}
+  .ability-score-input:focus{outline:none;border-color:var(--accent);}
+  .ability-score-input:disabled{opacity:.6;cursor:not-allowed;}
+  .ability-score-input::placeholder{color:#3a3a5a;font-size:13px;letter-spacing:0;}
+  .ability-desc-input{background:#1a1a2e;border:1px solid #2a2a3e;border-radius:4px;padding:5px 8px;font-size:11px;color:#8888aa;width:100%;font-family:'Barlow',sans-serif;resize:none;overflow:hidden;min-height:34px;line-height:1.4;}
+  .ability-desc-input:focus{outline:none;border-color:#4a4a6a;}
+  .ability-desc-input:disabled{opacity:.6;cursor:not-allowed;}
+  .ability-desc-input::placeholder{color:#3a3a5a;}
 
   /* COMBAT STATS */
-  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .stat-card { background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
-  .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .stat-input { background: transparent; border: none; border-bottom: 2px solid var(--border); padding: 4px 0; font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--ink); width: 60px; text-align: center; transition: border-color 0.15s; }
-  .stat-input:focus { outline: none; border-color: var(--accent); }
-  .stat-input:disabled { opacity: 0.6; cursor: not-allowed; }
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .stat-card{background:var(--field-bg);border:1.5px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+  .stat-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .stat-input{background:transparent;border:none;border-bottom:2px solid var(--border);padding:4px 0;font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--ink);width:60px;text-align:center;transition:border-color .15s;}
+  .stat-input:focus{outline:none;border-color:var(--accent);}
+  .stat-input:disabled{opacity:.6;cursor:not-allowed;}
 
   /* TALENTS */
-  .talents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .talent-row { display: flex; align-items: center; gap: 8px; background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 6px; padding: 8px 12px; }
-  .talent-name { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--ink); flex: 1; letter-spacing: 0.5px; }
-  .talent-score-input { background: var(--tag-bg); border: 1px solid var(--border); border-radius: 4px; padding: 4px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--ink); width: 64px; text-align: center; }
-  .talent-score-input:focus { outline: none; border-color: var(--accent); }
-  .talent-score-input:disabled { opacity: 0.6; cursor: not-allowed; }
-  .talent-score-input::placeholder { color: #aaa; font-size: 11px; letter-spacing: 0; }
+  .talents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .talent-row{display:flex;align-items:center;gap:8px;background:var(--field-bg);border:1.5px solid var(--border);border-radius:6px;padding:8px 12px;}
+  .talent-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--ink);flex:1;letter-spacing:.5px;}
+  .talent-score-input{background:var(--tag-bg);border:1px solid var(--border);border-radius:4px;padding:4px 6px;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--ink);width:64px;text-align:center;}
+  .talent-score-input:focus{outline:none;border-color:var(--accent);}
+  .talent-score-input:disabled{opacity:.6;cursor:not-allowed;}
+  .talent-score-input::placeholder{color:#aaa;font-size:11px;letter-spacing:0;}
 
   /* POWERS */
-  .powers-section { display: flex; flex-direction: column; gap: 14px; }
-  .power-card { background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .power-main { padding: 10px 12px; display: grid; grid-template-columns: 2fr 1fr 0.7fr 0.7fr auto; gap: 8px; align-items: end; background: #ede8de; border-bottom: 1px solid var(--border); }
-  .power-desc-row { padding: 8px 12px; border-bottom: 1px solid #e8e0d0; }
-  .power-sub-block { padding: 10px 12px; }
-  .power-sub-header { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
-  .pro-con-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .pro-con-inner { display: flex; flex-direction: column; gap: 6px; }
-  .mini-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-  .field-input-sm { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 8px; font-family: 'Barlow', sans-serif; font-size: 13px; color: var(--ink); width: 100%; transition: border-color 0.15s; }
-  .field-input-sm:focus { outline: none; border-color: var(--accent); }
-  .field-input-sm:disabled { opacity: 0.6; cursor: not-allowed; }
-  .field-input-narrow { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--ink); width: 100%; text-align: center; }
-  .field-input-narrow:focus { outline: none; border-color: var(--accent); }
-  .field-input-narrow:disabled { opacity: 0.6; cursor: not-allowed; }
-  .rank-cost-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .powers-section{display:flex;flex-direction:column;gap:14px;}
+  .power-card{background:var(--field-bg);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
+  .power-main{padding:10px 12px;display:grid;grid-template-columns:2fr 1fr 0.7fr 0.7fr auto;gap:8px;align-items:end;background:#ede8de;border-bottom:1px solid var(--border);}
+  .power-desc-row{padding:8px 12px;border-bottom:1px solid #e8e0d0;}
+  .power-procon-block{padding:10px 12px;}
+  .mini-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+
+  .field-input-sm{background:#fff;border:1.5px solid var(--border);border-radius:4px;padding:5px 8px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--ink);width:100%;transition:border-color .15s;}
+  .field-input-sm:focus{outline:none;border-color:var(--accent);}
+  .field-input-sm:disabled{opacity:.6;cursor:not-allowed;}
+  .field-input-narrow{background:#fff;border:1.5px solid var(--border);border-radius:4px;padding:5px 6px;font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--ink);width:100%;text-align:center;}
+  .field-input-narrow:focus{outline:none;border-color:var(--accent);}
+  .field-input-narrow:disabled{opacity:.6;cursor:not-allowed;}
+  .rank-cost-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+  /* PRO / CON blocks */
+  .pro-con-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .pro-con-col{display:flex;flex-direction:column;gap:8px;}
+  .pro-con-col-header{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;display:flex;align-items:center;justify-content:space-between;}
+  .procon-item{background:rgba(0,0,0,.03);border:1px solid #e0d8c8;border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;position:relative;}
+  .procon-item-num{font-family:'Bebas Neue',sans-serif;font-size:10px;letter-spacing:1px;color:var(--muted);margin-bottom:2px;}
+  .procon-name-row{display:grid;grid-template-columns:1fr 0.6fr 0.6fr;gap:6px;}
+  .btn-remove-sm{background:transparent;border:1px solid var(--border);border-radius:4px;width:22px;height:22px;color:var(--muted);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;position:absolute;top:6px;right:6px;}
+  .btn-remove-sm:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-add-sm{padding:4px 10px;background:transparent;border:1.5px dashed var(--border);border-radius:4px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);cursor:pointer;transition:all .15s;align-self:flex-start;}
+  .btn-add-sm:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-add-sm:disabled{opacity:.4;cursor:not-allowed;}
+
+  /* textarea inside power cards */
+  textarea.power-desc-ta{background:#fff;border:1.5px solid var(--border);border-radius:4px;padding:5px 8px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--ink);width:100%;resize:none;overflow:hidden;min-height:32px;line-height:1.5;}
+  textarea.power-desc-ta:focus{outline:none;border-color:var(--accent);}
+  textarea.power-desc-ta:disabled{opacity:.6;cursor:not-allowed;}
 
   /* GENERIC LISTS */
-  .list-section { display: flex; flex-direction: column; gap: 8px; }
-  .list-item { display: flex; gap: 8px; align-items: flex-start; }
-  .btn-remove { background: transparent; border: 1.5px solid var(--border); border-radius: 5px; width: 32px; height: 32px; color: var(--muted); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
-  .btn-remove:hover { border-color: var(--accent); color: var(--accent); background: rgba(230,57,70,0.08); }
-  .btn-add { align-self: flex-start; padding: 7px 16px; background: transparent; border: 1.5px dashed var(--border); border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s; margin-top: 4px; }
-  .btn-add:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-add:disabled, .btn-remove:disabled { opacity: 0.4; cursor: not-allowed; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  #notes-input { min-height: 120px; }
+  .list-section{display:flex;flex-direction:column;gap:8px;}
+  .list-item{display:flex;gap:8px;align-items:flex-start;}
+  .list-item-fields{display:flex;gap:8px;flex:1;flex-wrap:wrap;align-items:flex-start;}
+  .btn-remove{background:transparent;border:1.5px solid var(--border);border-radius:5px;width:32px;height:32px;color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+  .btn-remove:hover{border-color:var(--accent);color:var(--accent);background:rgba(230,57,70,.08);}
+  .btn-add{align-self:flex-start;padding:7px 16px;background:transparent;border:1.5px dashed var(--border);border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;margin-top:4px;}
+  .btn-add:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-add:disabled,.btn-remove:disabled{opacity:.4;cursor:not-allowed;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  /* PERK cost formula */
+  .perk-cost-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px;}
+  .perk-cost-num{background:var(--field-bg);border:1.5px solid var(--border);border-radius:4px;padding:4px 6px;font-family:'Bebas Neue',sans-serif;font-size:15px;color:var(--ink);width:52px;text-align:center;}
+  .perk-cost-num:focus{outline:none;border-color:var(--accent);}
+  .perk-cost-num:disabled{opacity:.6;cursor:not-allowed;}
+  .perk-cost-label{background:var(--field-bg);border:1.5px solid var(--border);border-radius:4px;padding:4px 7px;font-family:'Barlow',sans-serif;font-size:12px;color:var(--ink);width:110px;}
+  .perk-cost-label:focus{outline:none;border-color:var(--accent);}
+  .perk-cost-label:disabled{opacity:.6;cursor:not-allowed;}
+  .perk-cost-sep{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap;}
+
+  #notes-input{min-height:120px;}
 
   /* MODAL */
-  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-  .modal-backdrop.open { opacity: 1; pointer-events: all; }
-  .modal { background: var(--paper); border-radius: 12px; padding: 28px; width: 420px; max-width: 90vw; transform: translateY(16px); transition: transform 0.2s; }
-  .modal-backdrop.open .modal { transform: translateY(0); }
-  .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--ink); margin-bottom: 8px; }
-  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
-  .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
-  .btn-cancel { padding: 8px 18px; background: transparent; border: 1.5px solid var(--border); border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; }
-  .btn-cancel:hover { border-color: var(--ink); color: var(--ink); }
-  .btn-confirm { padding: 8px 18px; background: var(--accent); border: none; border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: #fff; cursor: pointer; }
-  .btn-confirm:hover { background: #c1121f; }
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+  .modal-backdrop.open{opacity:1;pointer-events:all;}
+  .modal{background:var(--paper);border-radius:12px;padding:28px;width:420px;max-width:90vw;transform:translateY(16px);transition:transform .2s;}
+  .modal-backdrop.open .modal{transform:translateY(0);}
+  .modal h2{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--ink);margin-bottom:8px;}
+  .modal p{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6;}
+  .modal-actions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
+  .btn-cancel{padding:8px 18px;background:transparent;border:1.5px solid var(--border);border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;}
+  .btn-cancel:hover{border-color:var(--ink);color:var(--ink);}
+  .btn-confirm{padding:8px 18px;background:var(--accent);border:none;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;}
+  .btn-confirm:hover{background:#c1121f;}
+  .share-url-box{background:#1a1a2e;border:1px solid #2a2a3e;border-radius:6px;padding:10px 12px;font-family:'Barlow Condensed',sans-serif;font-size:12px;color:#8888aa;word-break:break-all;line-height:1.5;margin-bottom:10px;}
+  .btn-copy{width:100%;padding:9px;background:var(--gold);border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--ink);cursor:pointer;transition:background .15s;}
+  .btn-copy:hover{background:#e08c4a;}
+  .token-box{background:#1a1a2e;border:1px solid #3a3a3a;border-radius:6px;padding:10px 12px;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:#5a8a5a;word-break:break-all;line-height:1.5;margin-top:12px;}
+  .import-input{background:#1a1a2e;border:1.5px solid #2a2a3e;border-radius:6px;padding:10px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:#e8e8f0;width:100%;margin-bottom:6px;}
+  .import-input:focus{outline:none;border-color:var(--gold);}
+  .import-input::placeholder{color:#3a3a5a;}
 
-  /* SHARE MODAL */
-  .share-url-box { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: #8888aa; word-break: break-all; line-height: 1.5; margin-bottom: 10px; }
-  .btn-copy { width: 100%; padding: 9px; background: var(--gold); border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--ink); cursor: pointer; transition: background 0.15s; }
-  .btn-copy:hover { background: #e08c4a; }
-  .token-box { background: #1a1a2e; border: 1px solid #3a3a3a; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: #5a8a5a; word-break: break-all; line-height: 1.5; margin-top: 12px; }
-
-  /* IMPORT MODAL */
-  .import-input { background: #1a1a2e; border: 1.5px solid #2a2a3e; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: #e8e8f0; width: 100%; margin-bottom: 6px; }
-  .import-input:focus { outline: none; border-color: var(--gold); }
-  .import-input::placeholder { color: #3a3a5a; }
-
-  /* LOADING OVERLAY */
-  #loading-overlay { position: fixed; inset: 0; background: rgba(13,13,13,0.85); z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
-  #loading-overlay.hidden { display: none; }
-  .loader { width: 40px; height: 40px; border: 3px solid #2a2a3e; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-text { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 2px; color: #5a5a7a; text-transform: uppercase; }
+  /* LOADING */
+  #loading-overlay{position:fixed;inset:0;background:rgba(13,13,13,.85);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+  #loading-overlay.hidden{display:none;}
+  .loader{width:40px;height:40px;border:3px solid #2a2a3e;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .loader-text{font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;color:#5a5a7a;text-transform:uppercase;}
 </style>
 </head>
 <body>
 <div id="app">
   <aside id="sidebar">
-    <div class="sidebar-header">
-      <h1>HERO VAULT</h1>
-      <p>Prowlers &amp; Paragons UE</p>
-    </div>
+    <div class="sidebar-header"><h1>HERO VAULT</h1><p>Prowlers &amp; Paragons UE</p></div>
     <div id="char-list"></div>
     <div class="sidebar-footer">
       <button id="btn-new">+ NEW HERO</button>
@@ -243,8 +270,8 @@
               <div class="field-group half"><label class="field-label">Hero Name</label><input class="field-input" id="f-name" placeholder="ชื่อฮีโร่"></div>
               <div class="field-group half"><label class="field-label">Alias / Secret Identity</label><input class="field-input" id="f-alias" placeholder="ชื่อจริง / ตัวตนจริง"></div>
               <div class="field-group half"><label class="field-label">Team</label><input class="field-input" id="f-team" placeholder="ทีม / กลุ่ม"></div>
-              <div class="field-group half"><label class="field-label">Motivation</label><input class="field-input" id="f-motivation" placeholder="แรงจูงใจ"></div>
-              <div class="field-group full"><label class="field-label">Quote</label><input class="field-input" id="f-quote" placeholder='"ประโยคเด็ดของฮีโร่..."'></div>
+              <div class="field-group half"><label class="field-label">Motivation</label><textarea class="field-input" id="f-motivation" placeholder="แรงจูงใจ..." rows="1"></textarea></div>
+              <div class="field-group full"><label class="field-label">Quote</label><textarea class="field-input" id="f-quote" placeholder='"ประโยคเด็ดของฮีโร่..."' rows="1"></textarea></div>
             </div>
           </div>
           <div style="display:flex;gap:16px;flex-shrink:0;">
@@ -390,17 +417,15 @@
       <div class="token-box" id="share-token-box"></div>
       <button class="btn-copy" style="background:#2a2a3e;color:#8888aa;margin-top:8px;" onclick="copyToken()">📋 Copy Token (สำหรับ sync เครื่องอื่น)</button>
     </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal('share-modal')">ปิด</button>
-    </div>
+    <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('share-modal')">ปิด</button></div>
   </div>
 </div>
 
-<!-- IMPORT TOKEN MODAL -->
+<!-- IMPORT MODAL -->
 <div class="modal-backdrop" id="import-modal">
   <div class="modal">
     <h2>↓ Import via Owner Token</h2>
-    <p>ใส่ Owner Token เพื่อ sync ตัวละครมายังเครื่องนี้ (จะสามารถแก้ไขได้)</p>
+    <p>ใส่ Owner Token เพื่อ sync ตัวละครมายังเครื่องนี้</p>
     <input class="import-input" id="import-token-input" placeholder="วาง Owner Token ที่นี่...">
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('import-modal')">ยกเลิก</button>
@@ -409,531 +434,464 @@
   </div>
 </div>
 
-<!-- LOADING OVERLAY -->
+<!-- LOADING -->
 <div id="loading-overlay" class="hidden">
   <div class="loader"></div>
   <div class="loader-text" id="loader-text">กำลังโหลด...</div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // CONFIG
-// ═══════════════════════════════════════════════
-const SUPABASE_URL = 'https://kiuwbpdjbhwcjzvyjbco.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Nuz7p1gfEVuzCDhjVnhgoA_vx_TTMT7';
-const API_BASE     = `${SUPABASE_URL}/rest/v1/characters`;
+// ═══════════════════════════════════════════
+const SUPABASE_URL='https://kiuwbpdjbhwcjzvyjbco.supabase.co';
+const SUPABASE_KEY='sb_publishable_Nuz7p1gfEVuzCDhjVnhgoA_vx_TTMT7';
+const API_BASE=`${SUPABASE_URL}/rest/v1/characters`;
+const ABILITIES=['Agility','Intellect','Might','Perception','Toughness','Willpower'];
+const TALENTS=['Academics','Charm','Command','Covert','Investigation','Medicine','Professional','Science','Streetwise','Survival','Technology','Vehicles'];
+const LS_KEY='pp_hero_vault_v2';
 
-const ABILITIES = ['Agility','Intellect','Might','Perception','Toughness','Willpower'];
-const TALENTS   = ['Academics','Charm','Command','Covert','Investigation','Medicine','Professional','Science','Streetwise','Survival','Technology','Vehicles'];
-const LS_KEY    = 'pp_hero_vault_v2'; // local index: [{id, owner_token, name, alias}]
+let characters=[],currentId=null,currentData=null,isOwner=false,pendingDeleteId=null;
 
-let characters  = []; // local index from LS
-let currentId   = null;
-let currentData = null; // full char data object
-let isOwner     = false;
-let pendingDeleteId = null;
+// ═══════════════════════════════════════════
+// AUTO-GROW TEXTAREAS
+// ═══════════════════════════════════════════
+function autoGrow(el){
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
+}
+function attachAutoGrow(el){
+  el.addEventListener('input',()=>autoGrow(el));
+  autoGrow(el);
+}
+function autoGrowAll(root=document){
+  root.querySelectorAll('textarea').forEach(ta=>{ autoGrow(ta); ta.addEventListener('input',()=>autoGrow(ta)); });
+}
 
-// ═══════════════════════════════════════════════
-// SUPABASE HELPERS
-// ═══════════════════════════════════════════════
-function sbHeaders(ownerToken = null) {
-  const h = {
-    'Content-Type': 'application/json',
-    'apikey': SUPABASE_KEY,
-    'Authorization': `Bearer ${SUPABASE_KEY}`,
-    'Prefer': 'return=representation'
-  };
-  if (ownerToken) h['x-owner-token'] = ownerToken;
+// ═══════════════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════════════
+function sbHeaders(ownerToken=null){
+  const h={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=representation'};
+  if(ownerToken) h['x-owner-token']=ownerToken;
   return h;
 }
+async function sbGet(id){const r=await fetch(`${API_BASE}?id=eq.${id}&select=*`,{headers:sbHeaders()});if(!r.ok)throw new Error('ไม่พบข้อมูล');const rows=await r.json();return rows[0]||null;}
+async function sbInsert(ownerToken,data){const r=await fetch(API_BASE,{method:'POST',headers:sbHeaders(ownerToken),body:JSON.stringify({owner_token:ownerToken,data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Insert failed');}return(await r.json())[0];}
+async function sbUpdate(id,ownerToken,data){const r=await fetch(`${API_BASE}?id=eq.${id}`,{method:'PATCH',headers:sbHeaders(ownerToken),body:JSON.stringify({data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed');}return true;}
+async function sbDelete(id,ownerToken){const r=await fetch(`${API_BASE}?id=eq.${id}`,{method:'DELETE',headers:sbHeaders(ownerToken)});if(!r.ok){const e=await r.json();throw new Error(e.message||'Delete failed');}return true;}
+function genToken(){return'tk_'+Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('');}
 
-async function sbGet(id) {
-  const res = await fetch(`${API_BASE}?id=eq.${id}&select=*`, { headers: sbHeaders() });
-  if (!res.ok) throw new Error('ไม่พบข้อมูล');
-  const rows = await res.json();
-  return rows[0] || null;
+// ═══════════════════════════════════════════
+// LOCAL INDEX
+// ═══════════════════════════════════════════
+function loadIndex(){try{const r=localStorage.getItem(LS_KEY);if(r)characters=JSON.parse(r);}catch(e){characters=[];}}
+function saveIndex(){localStorage.setItem(LS_KEY,JSON.stringify(characters));}
+function getIndexEntry(id){return characters.find(c=>c.id===id);}
+
+// ═══════════════════════════════════════════
+// LOADING / MODAL
+// ═══════════════════════════════════════════
+function showLoading(t='กำลังโหลด...'){document.getElementById('loading-overlay').classList.remove('hidden');document.getElementById('loader-text').textContent=t;}
+function hideLoading(){document.getElementById('loading-overlay').classList.add('hidden');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+// ═══════════════════════════════════════════
+// READ-ONLY
+// ═══════════════════════════════════════════
+function applyReadOnly(readonly){
+  isOwner=!readonly;
+  document.getElementById('readonly-badge').style.display=readonly?'inline-block':'none';
+  document.getElementById('btn-save').style.display=readonly?'none':'inline-block';
+  document.querySelectorAll('#sheet input,#sheet textarea,#sheet select').forEach(el=>el.disabled=readonly);
+  document.querySelectorAll('.origin-btn').forEach(b=>b.disabled=readonly);
+  document.querySelectorAll('.btn-add,.btn-remove,.btn-add-sm,.btn-remove-sm').forEach(b=>b.disabled=readonly);
+  document.querySelectorAll('.portrait-frame').forEach(f=>readonly?f.classList.add('readonly'):f.classList.remove('readonly'));
 }
 
-async function sbInsert(ownerToken, data) {
-  const res = await fetch(API_BASE, {
-    method: 'POST',
-    headers: sbHeaders(ownerToken),
-    body: JSON.stringify({ owner_token: ownerToken, data })
-  });
-  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Insert failed'); }
-  const rows = await res.json();
-  return rows[0];
-}
-
-async function sbUpdate(id, ownerToken, data) {
-  const res = await fetch(`${API_BASE}?id=eq.${id}`, {
-    method: 'PATCH',
-    headers: sbHeaders(ownerToken),
-    body: JSON.stringify({ data })
-  });
-  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Update failed'); }
-  return true;
-}
-
-async function sbDelete(id, ownerToken) {
-  const res = await fetch(`${API_BASE}?id=eq.${id}`, {
-    method: 'DELETE',
-    headers: sbHeaders(ownerToken)
-  });
-  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Delete failed'); }
-  return true;
-}
-
-function genToken() {
-  return 'tk_' + Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-
-// ═══════════════════════════════════════════════
-// LOCAL INDEX (LS)
-// ═══════════════════════════════════════════════
-function loadIndex() {
-  try { const r = localStorage.getItem(LS_KEY); if (r) characters = JSON.parse(r); } catch(e) { characters = []; }
-}
-function saveIndex() { localStorage.setItem(LS_KEY, JSON.stringify(characters)); }
-function getIndexEntry(id) { return characters.find(c=>c.id===id); }
-
-// ═══════════════════════════════════════════════
-// LOADING OVERLAY
-// ═══════════════════════════════════════════════
-function showLoading(text='กำลังโหลด...') { document.getElementById('loading-overlay').classList.remove('hidden'); document.getElementById('loader-text').textContent = text; }
-function hideLoading() { document.getElementById('loading-overlay').classList.add('hidden'); }
-
-// ═══════════════════════════════════════════════
-// MODAL HELPERS
-// ═══════════════════════════════════════════════
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-// ═══════════════════════════════════════════════
-// READ-ONLY MODE
-// ═══════════════════════════════════════════════
-function applyReadOnly(readonly) {
-  isOwner = !readonly;
-  document.getElementById('readonly-badge').style.display = readonly ? 'inline-block' : 'none';
-  document.getElementById('btn-save').style.display = readonly ? 'none' : 'inline-block';
-
-  const inputs = document.querySelectorAll('#sheet input, #sheet textarea, #sheet select');
-  inputs.forEach(el => el.disabled = readonly);
-  document.querySelectorAll('.origin-btn').forEach(b => b.disabled = readonly);
-  document.querySelectorAll('.btn-add, .btn-remove').forEach(b => b.disabled = readonly);
-  document.querySelectorAll('.portrait-frame').forEach(f => {
-    if (readonly) f.classList.add('readonly'); else f.classList.remove('readonly');
-  });
-}
-
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // PORTRAITS
-// ═══════════════════════════════════════════════
-function portraitClick(slot) {
-  if (!isOwner) return;
-  document.getElementById('portrait-'+slot+'-file').click();
-}
-function loadPortrait(event, slot) {
-  if (!isOwner) return;
-  const file = event.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    showPortrait(slot, e.target.result);
-    if (currentData) { currentData['portrait_'+slot] = e.target.result; setSaved(false); }
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
-function showPortrait(slot, dataUrl) {
-  const img = document.getElementById('portrait-'+slot+'-img');
-  const ph  = document.getElementById('portrait-'+slot+'-placeholder');
-  if (dataUrl) { img.src = dataUrl; img.style.display = 'block'; ph.style.display = 'none'; }
-  else          { img.src = '';     img.style.display = 'none';  ph.style.display = 'flex'; }
-}
-function clearPortrait(event, slot) {
-  event.stopPropagation();
-  if (!isOwner) return;
-  showPortrait(slot, null);
-  if (currentData) { currentData['portrait_'+slot] = ''; setSaved(false); }
-}
+// ═══════════════════════════════════════════
+function portraitClick(slot){if(!isOwner)return;document.getElementById('portrait-'+slot+'-file').click();}
+function loadPortrait(event,slot){if(!isOwner)return;const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{showPortrait(slot,e.target.result);if(currentData){currentData['portrait_'+slot]=e.target.result;setSaved(false);}};reader.readAsDataURL(file);event.target.value='';}
+function showPortrait(slot,dataUrl){const img=document.getElementById('portrait-'+slot+'-img');const ph=document.getElementById('portrait-'+slot+'-placeholder');if(dataUrl){img.src=dataUrl;img.style.display='block';ph.style.display='none';}else{img.src='';img.style.display='none';ph.style.display='flex';}}
+function clearPortrait(event,slot){event.stopPropagation();if(!isOwner)return;showPortrait(slot,null);if(currentData){currentData['portrait_'+slot]='';setSaved(false);}}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // INIT GRIDS
-// ═══════════════════════════════════════════════
-function initAbilities() {
-  document.getElementById('abilities-grid').innerHTML = ABILITIES.map(ab=>`
+// ═══════════════════════════════════════════
+function initAbilities(){
+  document.getElementById('abilities-grid').innerHTML=ABILITIES.map(ab=>`
     <div class="ability-card">
       <div class="ability-name">${ab}</div>
       <input class="ability-score-input" type="text" data-ability="${ab}" placeholder="—" maxlength="10">
-      <textarea class="ability-desc-input" data-ability-desc="${ab}" placeholder="หมายเหตุ..."></textarea>
+      <textarea class="ability-desc-input" data-ability-desc="${ab}" placeholder="หมายเหตุ..." rows="1"></textarea>
     </div>`).join('');
 }
-function initTalents() {
-  document.getElementById('talents-grid').innerHTML = TALENTS.map(t=>`
+function initTalents(){
+  document.getElementById('talents-grid').innerHTML=TALENTS.map(t=>`
     <div class="talent-row">
       <span class="talent-name">${t}</span>
       <input class="talent-score-input" type="text" data-talent="${t}" placeholder="—" maxlength="10">
     </div>`).join('');
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // POWERS
-// ═══════════════════════════════════════════════
-function renderPowers(char) {
-  const ro = !isOwner;
-  const d = ro ? 'disabled' : '';
-  const container = document.getElementById('powers-list');
-  container.innerHTML = '';
-  (char.powers||[]).forEach((pw,idx)=>{
-    const card = document.createElement('div');
-    card.className = 'power-card';
-    card.innerHTML = `
+// ═══════════════════════════════════════════
+function newProCon(){return{name:'',rank:'',cost:'',desc:''};}
+function newPower(){return{name:'',source:'',rank:'',cost:'',desc:'',pros:[newProCon()],cons:[newProCon()]};}
+
+function renderPowers(char){
+  const ro=!isOwner,d=ro?'disabled':'';
+  const container=document.getElementById('powers-list');
+  container.innerHTML='';
+  (char.powers||[]).forEach((pw,pi)=>{
+    const card=document.createElement('div');
+    card.className='power-card';
+
+    // build pros html
+    const prosHtml=(pw.pros||[newProCon()]).map((p,ci)=>`
+      <div class="procon-item" id="pro-${pi}-${ci}">
+        ${(pw.pros||[]).length>1&&!ro?`<button class="btn-remove-sm" onclick="removeProCon(${pi},'pros',${ci})">✕</button>`:''}
+        <div class="procon-item-num">Pro ${ci+1}</div>
+        <div class="procon-name-row">
+          <div><div class="mini-label">Name</div><input class="field-input-sm" placeholder="Pro name..." value="${esc(p.name||'')}" oninput="pcChange(${pi},'pros',${ci},'name',this.value)" ${d}></div>
+          <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(p.rank||'')}" oninput="pcChange(${pi},'pros',${ci},'rank',this.value)" ${d}></div>
+          <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(p.cost||'')}" oninput="pcChange(${pi},'pros',${ci},'cost',this.value)" ${d}></div>
+        </div>
+        <div><div class="mini-label">Description</div><textarea class="power-desc-ta" placeholder="Pro description..." oninput="pcChange(${pi},'pros',${ci},'desc',this.value);autoGrow(this)" ${d}>${esc(p.desc||'')}</textarea></div>
+      </div>`).join('');
+
+    const consHtml=(pw.cons||[newProCon()]).map((c,ci)=>`
+      <div class="procon-item" id="con-${pi}-${ci}">
+        ${(pw.cons||[]).length>1&&!ro?`<button class="btn-remove-sm" onclick="removeProCon(${pi},'cons',${ci})">✕</button>`:''}
+        <div class="procon-item-num">Con ${ci+1}</div>
+        <div class="procon-name-row">
+          <div><div class="mini-label">Name</div><input class="field-input-sm" placeholder="Con name..." value="${esc(c.name||'')}" oninput="pcChange(${pi},'cons',${ci},'name',this.value)" ${d}></div>
+          <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(c.rank||'')}" oninput="pcChange(${pi},'cons',${ci},'rank',this.value)" ${d}></div>
+          <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(c.cost||'')}" oninput="pcChange(${pi},'cons',${ci},'cost',this.value)" ${d}></div>
+        </div>
+        <div><div class="mini-label">Description</div><textarea class="power-desc-ta" placeholder="Con description..." oninput="pcChange(${pi},'cons',${ci},'desc',this.value);autoGrow(this)" ${d}>${esc(c.desc||'')}</textarea></div>
+      </div>`).join('');
+
+    card.innerHTML=`
       <div class="power-main">
-        <div><div class="mini-label">Power Name</div><input class="field-input-sm" placeholder="ชื่อ Power" value="${esc(pw.name||'')}" oninput="pwChange(${idx},'name',this.value)" ${d}></div>
-        <div><div class="mini-label">Source</div><input class="field-input-sm" placeholder="Source" value="${esc(pw.source||'')}" oninput="pwChange(${idx},'source',this.value)" ${d}></div>
-        <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.rank||'')}" oninput="pwChange(${idx},'rank',this.value)" ${d}></div>
-        <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.cost||'')}" oninput="pwChange(${idx},'cost',this.value)" ${d}></div>
-        <button class="btn-remove" onclick="removePower(${idx})" ${d}>✕</button>
+        <div><div class="mini-label">Power Name</div><input class="field-input-sm" placeholder="ชื่อ Power" value="${esc(pw.name||'')}" oninput="pwChange(${pi},'name',this.value)" ${d}></div>
+        <div><div class="mini-label">Source</div><input class="field-input-sm" placeholder="Source" value="${esc(pw.source||'')}" oninput="pwChange(${pi},'source',this.value)" ${d}></div>
+        <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.rank||'')}" oninput="pwChange(${pi},'rank',this.value)" ${d}></div>
+        <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.cost||'')}" oninput="pwChange(${pi},'cost',this.value)" ${d}></div>
+        <button class="btn-remove" onclick="removePower(${pi})" ${d}>✕</button>
       </div>
       <div class="power-desc-row">
         <div class="mini-label">Description</div>
-        <input class="field-input-sm" placeholder="รายละเอียด..." value="${esc(pw.desc||'')}" oninput="pwChange(${idx},'desc',this.value)" ${d}>
+        <textarea class="power-desc-ta" placeholder="รายละเอียด..." oninput="pwChange(${pi},'desc',this.value);autoGrow(this)" ${d}>${esc(pw.desc||'')}</textarea>
       </div>
-      <div class="power-sub-block">
-        <div class="pro-con-grid">
-          <div>
-            <div class="power-sub-header" style="color:#4caf50;">✦ Pro</div>
-            <div class="pro-con-inner">
-              <div><div class="mini-label">Description</div><input class="field-input-sm" placeholder="Pro description..." value="${esc(pw.proDesc||'')}" oninput="pwChange(${idx},'proDesc',this.value)" ${d}></div>
-              <div class="rank-cost-row">
-                <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.proRank||'')}" oninput="pwChange(${idx},'proRank',this.value)" ${d}></div>
-                <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.proCost||'')}" oninput="pwChange(${idx},'proCost',this.value)" ${d}></div>
-              </div>
+      <div class="power-procon-block">
+        <div class="pro-con-columns">
+          <div class="pro-con-col">
+            <div class="pro-con-col-header">
+              <span style="color:#4caf50;">✦ Pro</span>
+              ${!ro?`<button class="btn-add-sm" onclick="addProCon(${pi},'pros')">+ Pro</button>`:''}
             </div>
+            ${prosHtml}
           </div>
-          <div>
-            <div class="power-sub-header" style="color:var(--accent);">✦ Con</div>
-            <div class="pro-con-inner">
-              <div><div class="mini-label">Description</div><input class="field-input-sm" placeholder="Con description..." value="${esc(pw.conDesc||'')}" oninput="pwChange(${idx},'conDesc',this.value)" ${d}></div>
-              <div class="rank-cost-row">
-                <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.conRank||'')}" oninput="pwChange(${idx},'conRank',this.value)" ${d}></div>
-                <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.conCost||'')}" oninput="pwChange(${idx},'conCost',this.value)" ${d}></div>
-              </div>
+          <div class="pro-con-col">
+            <div class="pro-con-col-header">
+              <span style="color:var(--accent);">✦ Con</span>
+              ${!ro?`<button class="btn-add-sm" onclick="addProCon(${pi},'cons')">+ Con</button>`:''}
             </div>
+            ${consHtml}
           </div>
         </div>
       </div>`;
     container.appendChild(card);
   });
+  // auto-grow all textareas inside powers
+  container.querySelectorAll('textarea').forEach(ta=>{autoGrow(ta);ta.addEventListener('input',()=>autoGrow(ta));});
 }
-function pwChange(idx,key,value){ if(!currentData||!currentData.powers[idx]) return; currentData.powers[idx][key]=value; setSaved(false); }
-function addPower(){ if(!currentData||!isOwner) return; currentData.powers.push({name:'',source:'',rank:'',cost:'',desc:'',proDesc:'',proRank:'',proCost:'',conDesc:'',conRank:'',conCost:''}); renderPowers(currentData); setSaved(false); }
-function removePower(idx){ if(!currentData||!isOwner) return; currentData.powers.splice(idx,1); renderPowers(currentData); setSaved(false); }
 
-// ═══════════════════════════════════════════════
+function pwChange(pi,key,value){if(!currentData||!currentData.powers[pi])return;currentData.powers[pi][key]=value;setSaved(false);}
+function pcChange(pi,arr,ci,key,value){if(!currentData||!currentData.powers[pi])return;currentData.powers[pi][arr][ci][key]=value;setSaved(false);}
+function addPower(){if(!currentData||!isOwner)return;if(!currentData.powers)currentData.powers=[];currentData.powers.push(newPower());renderPowers(currentData);setSaved(false);}
+function removePower(pi){if(!currentData||!isOwner)return;currentData.powers.splice(pi,1);renderPowers(currentData);setSaved(false);}
+function addProCon(pi,arr){if(!currentData||!isOwner)return;if(!currentData.powers[pi][arr])currentData.powers[pi][arr]=[];currentData.powers[pi][arr].push(newProCon());renderPowers(currentData);setSaved(false);}
+function removeProCon(pi,arr,ci){if(!currentData||!isOwner)return;currentData.powers[pi][arr].splice(ci,1);renderPowers(currentData);setSaved(false);}
+
+// ═══════════════════════════════════════════
 // GENERIC LISTS
-// ═══════════════════════════════════════════════
-const listConfig = {
-  'perks-list':       {fields:[{key:'name',ph:'Perk name',flex:1},{key:'notes',ph:'Description',flex:2}],arr:'perks'},
-  'flaws-list':       {fields:[{key:'name',ph:'Flaw',flex:1},{key:'notes',ph:'Description',flex:2}],arr:'flaws'},
-  'gear-list':        {fields:[{key:'name',ph:'Item name',flex:1},{key:'notes',ph:'Notes',flex:2}],arr:'gear'},
-  'connections-list': {fields:[{key:'name',ph:'Name / Org',flex:1},{key:'notes',ph:'Relationship',flex:2}],arr:'connections'},
-};
-const removeFnMap = {'perks-list':'removePerk','flaws-list':'removeFlaw','gear-list':'removeGear','connections-list':'removeConnection'};
-
-function renderGenericList(containerId, items, fields, removeFn) {
-  const ro = !isOwner; const d = ro ? 'disabled' : '';
-  const c = document.getElementById(containerId); c.innerHTML = '';
-  (items||[]).forEach((item,idx)=>{
-    const row = document.createElement('div'); row.className = 'list-item';
-    const fh = fields.map(f=>`<div style="flex:${f.flex};min-width:120px"><input class="field-input" style="width:100%" placeholder="${f.ph}" value="${esc(item[f.key]||'')}" oninput="genericListChange('${containerId}',${idx},'${f.key}',this.value)" ${d}></div>`).join('');
-    row.innerHTML = `<div style="display:flex;gap:8px;flex:1;flex-wrap:wrap">${fh}</div><button class="btn-remove" onclick="${removeFn}(${idx})" ${d}>✕</button>`;
-    c.appendChild(row);
+// ═══════════════════════════════════════════
+function renderPerks(char){
+  const ro=!isOwner,d=ro?'disabled':'';
+  const container=document.getElementById('perks-list');container.innerHTML='';
+  (char.perks||[]).forEach((item,idx)=>{
+    const row=document.createElement('div');row.className='list-item';
+    row.innerHTML=`
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+        <input class="field-input" style="width:100%" placeholder="Perk name" value="${esc(item.name||'')}" oninput="perkChange(${idx},'name',this.value)" ${d}>
+        <textarea class="field-input" style="min-height:32px;" placeholder="Description..." oninput="perkChange(${idx},'notes',this.value);autoGrow(this)" ${d}>${esc(item.notes||'')}</textarea>
+        <div class="perk-cost-row">
+          <input class="perk-cost-num" type="text" placeholder="1" value="${esc(item.costVal||'')}" oninput="perkChange(${idx},'costVal',this.value)" ${d}>
+          <input class="perk-cost-label" type="text" placeholder="Hero Point" value="${esc(item.costLabel||'Hero Point')}" oninput="perkChange(${idx},'costLabel',this.value)" ${d}>
+          <span class="perk-cost-sep">per</span>
+          <input class="perk-cost-num" type="text" placeholder="1" value="${esc(item.perVal||'')}" oninput="perkChange(${idx},'perVal',this.value)" ${d}>
+          <input class="perk-cost-label" type="text" placeholder="Hero Point" value="${esc(item.perLabel||'Hero Point')}" oninput="perkChange(${idx},'perLabel',this.value)" ${d}>
+        </div>
+      </div>
+      <button class="btn-remove" onclick="removePerk(${idx})" ${d}>✕</button>`;
+    container.appendChild(row);
   });
+  container.querySelectorAll('textarea').forEach(ta=>{autoGrow(ta);ta.addEventListener('input',()=>autoGrow(ta));});
 }
-function genericListChange(containerId,idx,key,value){ if(!currentData) return; currentData[listConfig[containerId].arr][idx][key]=value; setSaved(false); }
-function renderAllLists(char){ renderPowers(char); for(const [id,cfg] of Object.entries(listConfig)) renderGenericList(id,char[cfg.arr],cfg.fields,removeFnMap[id]); }
-function addGenericItem(arr,cid){ if(!currentData||!isOwner) return; currentData[arr].push({name:'',notes:''}); renderGenericList(cid,currentData[arr],listConfig[cid].fields,removeFnMap[cid]); setSaved(false); }
-function removeGenericItem(arr,cid,idx){ if(!currentData||!isOwner) return; currentData[arr].splice(idx,1); renderGenericList(cid,currentData[arr],listConfig[cid].fields,removeFnMap[cid]); setSaved(false); }
-function addPerk(){addGenericItem('perks','perks-list');}   function removePerk(i){removeGenericItem('perks','perks-list',i);}
-function addFlaw(){addGenericItem('flaws','flaws-list');}   function removeFlaw(i){removeGenericItem('flaws','flaws-list',i);}
-function addGear(){addGenericItem('gear','gear-list');}     function removeGear(i){removeGenericItem('gear','gear-list',i);}
-function addConnection(){addGenericItem('connections','connections-list');} function removeConnection(i){removeGenericItem('connections','connections-list',i);}
 
-// ═══════════════════════════════════════════════
+function perkChange(idx,key,value){if(!currentData||!currentData.perks[idx])return;currentData.perks[idx][key]=value;setSaved(false);}
+function addPerk(){if(!currentData||!isOwner)return;currentData.perks.push({name:'',notes:'',costVal:'',costLabel:'Hero Point',perVal:'',perLabel:'Hero Point'});renderPerks(currentData);setSaved(false);}
+function removePerk(i){if(!currentData||!isOwner)return;currentData.perks.splice(i,1);renderPerks(currentData);setSaved(false);}
+
+// Flaws, Gear, Connections — name + auto-grow textarea
+function renderSimpleList(containerId,arr,namePh,notesPh,removeFn){
+  const ro=!isOwner,d=ro?'disabled':'';
+  const container=document.getElementById(containerId);container.innerHTML='';
+  (arr||[]).forEach((item,idx)=>{
+    const row=document.createElement('div');row.className='list-item';
+    row.innerHTML=`
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+        <input class="field-input" style="width:100%" placeholder="${namePh}" value="${esc(item.name||'')}" oninput="simpleListChange('${containerId}',${idx},'name',this.value)" ${d}>
+        <textarea class="field-input" style="min-height:32px;" placeholder="${notesPh}" oninput="simpleListChange('${containerId}',${idx},'notes',this.value);autoGrow(this)" ${d}>${esc(item.notes||'')}</textarea>
+      </div>
+      <button class="btn-remove" onclick="${removeFn}(${idx})" ${d}>✕</button>`;
+    container.appendChild(row);
+  });
+  container.querySelectorAll('textarea').forEach(ta=>{autoGrow(ta);ta.addEventListener('input',()=>autoGrow(ta));});
+}
+
+function simpleListChange(containerId,idx,key,value){
+  if(!currentData)return;
+  const arrMap={'flaws-list':'flaws','gear-list':'gear','connections-list':'connections'};
+  const arr=arrMap[containerId];
+  if(arr&&currentData[arr][idx])currentData[arr][idx][key]=value;
+  setSaved(false);
+}
+
+function addFlaw(){if(!currentData||!isOwner)return;currentData.flaws.push({name:'',notes:''});renderSimpleList('flaws-list',currentData.flaws,'Flaw','Description...',  'removeFlaw');setSaved(false);}
+function removeFlaw(i){if(!currentData||!isOwner)return;currentData.flaws.splice(i,1);renderSimpleList('flaws-list',currentData.flaws,'Flaw','Description...','removeFlaw');setSaved(false);}
+function addGear(){if(!currentData||!isOwner)return;currentData.gear.push({name:'',notes:''});renderSimpleList('gear-list',currentData.gear,'Item name','Notes...','removeGear');setSaved(false);}
+function removeGear(i){if(!currentData||!isOwner)return;currentData.gear.splice(i,1);renderSimpleList('gear-list',currentData.gear,'Item name','Notes...','removeGear');setSaved(false);}
+function addConnection(){if(!currentData||!isOwner)return;currentData.connections.push({name:'',notes:''});renderSimpleList('connections-list',currentData.connections,'Name / Org','Relationship...','removeConnection');setSaved(false);}
+function removeConnection(i){if(!currentData||!isOwner)return;currentData.connections.splice(i,1);renderSimpleList('connections-list',currentData.connections,'Name / Org','Relationship...','removeConnection');setSaved(false);}
+
+function renderAllLists(char){
+  renderPowers(char);
+  renderPerks(char);
+  renderSimpleList('flaws-list',char.flaws,'Flaw','Description...','removeFlaw');
+  renderSimpleList('gear-list',char.gear,'Item name','Notes...','removeGear');
+  renderSimpleList('connections-list',char.connections,'Name / Org','Relationship...','removeConnection');
+}
+
+// ═══════════════════════════════════════════
 // ORIGIN BUTTONS
-// ═══════════════════════════════════════════════
-document.addEventListener('click', e=>{
-  const btn = e.target.closest('.origin-btn');
-  if (!btn || btn.disabled || !currentData || !isOwner) return;
-  const group = btn.dataset.group, v = btn.dataset.val;
-  currentData[group] = currentData[group]===v ? '' : v;
+// ═══════════════════════════════════════════
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('.origin-btn');
+  if(!btn||btn.disabled||!currentData||!isOwner)return;
+  const group=btn.dataset.group,v=btn.dataset.val;
+  currentData[group]=currentData[group]===v?'':v;
   document.querySelectorAll(`.origin-btn[data-group="${group}"]`).forEach(b=>b.classList.toggle('selected',b.dataset.val===currentData[group]));
   setSaved(false);
 });
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // COLLECT FORM
-// ═══════════════════════════════════════════════
-function collectForm() {
-  if (!currentData || !isOwner) return;
-  currentData.name        = val('f-name');
-  currentData.alias       = val('f-alias');
-  currentData.team        = val('f-team');
-  currentData.motivation  = val('f-motivation');
-  currentData.quote       = val('f-quote');
-  currentData.description = val('f-description');
-  currentData.notes       = val('notes-input');
-  currentData.stats = { edge:val('stat-edge'), health:val('stat-health'), resolve:val('stat-resolve'), hp:val('stat-hp') };
-  currentData.abilities = {};
-  ABILITIES.forEach(ab=>{ currentData.abilities[ab]={ score: document.querySelector(`[data-ability="${ab}"]`)?.value||'', desc: document.querySelector(`[data-ability-desc="${ab}"]`)?.value||'' }; });
-  currentData.talents = {};
-  TALENTS.forEach(t=>{ currentData.talents[t] = document.querySelector(`[data-talent="${t}"]`)?.value||''; });
+// ═══════════════════════════════════════════
+function collectForm(){
+  if(!currentData||!isOwner)return;
+  currentData.name=val('f-name');currentData.alias=val('f-alias');currentData.team=val('f-team');
+  currentData.motivation=val('f-motivation');currentData.quote=val('f-quote');
+  currentData.description=val('f-description');currentData.notes=val('notes-input');
+  currentData.stats={edge:val('stat-edge'),health:val('stat-health'),resolve:val('stat-resolve'),hp:val('stat-hp')};
+  currentData.abilities={};
+  ABILITIES.forEach(ab=>{currentData.abilities[ab]={score:document.querySelector(`[data-ability="${ab}"]`)?.value||'',desc:document.querySelector(`[data-ability-desc="${ab}"]`)?.value||''};});
+  currentData.talents={};
+  TALENTS.forEach(t=>{currentData.talents[t]=document.querySelector(`[data-talent="${t}"]`)?.value||'';});
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // POPULATE FORM
-// ═══════════════════════════════════════════════
-function populateForm(char) {
-  set('f-name',char.name||''); set('f-alias',char.alias||''); set('f-team',char.team||'');
-  set('f-motivation',char.motivation||''); set('f-quote',char.quote||'');
-  set('f-description',char.description||''); set('notes-input',char.notes||'');
+// ═══════════════════════════════════════════
+function populateForm(char){
+  set('f-name',char.name||'');set('f-alias',char.alias||'');set('f-team',char.team||'');
+  set('f-motivation',char.motivation||'');set('f-quote',char.quote||'');
+  set('f-description',char.description||'');set('notes-input',char.notes||'');
   const s=char.stats||{};
-  set('stat-edge',s.edge||0); set('stat-health',s.health||0); set('stat-resolve',s.resolve||0); set('stat-hp',s.hp||0);
-  ABILITIES.forEach(ab=>{ const d=(char.abilities||{})[ab]||{}; const inp=document.querySelector(`[data-ability="${ab}"]`); const desc=document.querySelector(`[data-ability-desc="${ab}"]`); if(inp) inp.value=d.score||''; if(desc) desc.value=d.desc||''; });
-  TALENTS.forEach(t=>{ const inp=document.querySelector(`[data-talent="${t}"]`); if(inp) inp.value=(char.talents||{})[t]||''; });
-  ['nature','basicOrigin'].forEach(group=>{ document.querySelectorAll(`.origin-btn[data-group="${group}"]`).forEach(b=>b.classList.toggle('selected',b.dataset.val===char[group])); });
+  set('stat-edge',s.edge||0);set('stat-health',s.health||0);set('stat-resolve',s.resolve||0);set('stat-hp',s.hp||0);
+  ABILITIES.forEach(ab=>{const d=(char.abilities||{})[ab]||{};const inp=document.querySelector(`[data-ability="${ab}"]`);const desc=document.querySelector(`[data-ability-desc="${ab}"]`);if(inp)inp.value=d.score||'';if(desc)desc.value=d.desc||'';});
+  TALENTS.forEach(t=>{const inp=document.querySelector(`[data-talent="${t}"]`);if(inp)inp.value=(char.talents||{})[t]||'';});
+  ['nature','basicOrigin'].forEach(group=>{document.querySelectorAll(`.origin-btn[data-group="${group}"]`).forEach(b=>b.classList.toggle('selected',b.dataset.val===char[group]));});
   showPortrait('civilian',char.portrait_civilian||'');
   showPortrait('hero',char.portrait_hero||'');
   renderAllLists(char);
+  // auto-grow static textareas
+  setTimeout(()=>autoGrowAll(document),50);
   setSaved(true);
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // SIDEBAR
-// ═══════════════════════════════════════════════
-function renderSidebar() {
-  const list = document.getElementById('char-list'); list.innerHTML = '';
-  if (!characters.length) { list.innerHTML = '<p style="color:#3a3a5a;font-size:12px;text-align:center;padding:20px;">ยังไม่มีตัวละคร</p>'; return; }
+// ═══════════════════════════════════════════
+function renderSidebar(){
+  const list=document.getElementById('char-list');list.innerHTML='';
+  if(!characters.length){list.innerHTML='<p style="color:#3a3a5a;font-size:12px;text-align:center;padding:20px;">ยังไม่มีตัวละคร</p>';return;}
   characters.forEach(c=>{
-    const div = document.createElement('div');
-    div.className = 'char-item'+(c.id===currentId?' active':'');
-    const isOwnerEntry = !!c.owner_token;
-    div.innerHTML = `
-      <div class="char-avatar">${(c.name||'?')[0].toUpperCase()}</div>
-      <div class="char-info">
-        <div class="char-name">${esc(c.name||'Unnamed Hero')}</div>
-        <div class="char-alias">${esc(c.alias||'—')} ${isOwnerEntry?'':'👁'}</div>
-      </div>
-      ${isOwnerEntry?`<button class="char-delete" title="ลบ" onclick="event.stopPropagation();confirmDelete('${c.id}')">×</button>`:''}`;
-    div.addEventListener('click', ()=>selectChar(c.id));
+    const div=document.createElement('div');div.className='char-item'+(c.id===currentId?' active':'');
+    const isOwnerEntry=!!c.owner_token;
+    div.innerHTML=`<div class="char-avatar">${(c.name||'?')[0].toUpperCase()}</div><div class="char-info"><div class="char-name">${esc(c.name||'Unnamed Hero')}</div><div class="char-alias">${esc(c.alias||'—')} ${isOwnerEntry?'':'👁'}</div></div>${isOwnerEntry?`<button class="char-delete" title="ลบ" onclick="event.stopPropagation();confirmDelete('${c.id}')">×</button>`:''}`;
+    div.addEventListener('click',()=>selectChar(c.id));
     list.appendChild(div);
   });
 }
 
-// ═══════════════════════════════════════════════
-// SELECT CHARACTER (load from Supabase)
-// ═══════════════════════════════════════════════
-async function selectChar(id) {
-  if (currentId === id) return;
+// ═══════════════════════════════════════════
+// SELECT / NEW / DELETE / SAVE
+// ═══════════════════════════════════════════
+async function selectChar(id){
+  if(currentId===id)return;
   showLoading('กำลังโหลดตัวละคร...');
-  try {
-    const row = await sbGet(id);
-    if (!row) { alert('ไม่พบข้อมูลใน Supabase'); hideLoading(); return; }
-    currentId   = id;
-    currentData = row.data || {};
-    const entry = getIndexEntry(id);
-    const owner = entry?.owner_token || null;
-    applyReadOnly(!owner);
-    document.getElementById('empty-state').style.display = 'none';
+  try{
+    const row=await sbGet(id);
+    if(!row){alert('ไม่พบข้อมูลใน Supabase');hideLoading();return;}
+    currentId=id;currentData=row.data||{};
+    // ensure arrays exist and migrate old power format
+    if(!currentData.powers)currentData.powers=[];
+    currentData.powers=currentData.powers.map(pw=>{
+      if(!pw.pros)pw.pros=[{name:'',rank:pw.proRank||'',cost:pw.proCost||'',desc:pw.proDesc||''}];
+      if(!pw.cons)pw.cons=[{name:'',rank:pw.conRank||'',cost:pw.conCost||'',desc:pw.conDesc||''}];
+      return pw;
+    });
+    if(!currentData.perks)currentData.perks=[];
+    if(!currentData.flaws)currentData.flaws=[];
+    if(!currentData.gear)currentData.gear=[];
+    if(!currentData.connections)currentData.connections=[];
+    const entry=getIndexEntry(id);
+    applyReadOnly(!entry?.owner_token);
+    document.getElementById('empty-state').style.display='none';
     document.getElementById('sheet').classList.add('visible');
     populateForm(currentData);
     renderSidebar();
-  } catch(e) {
-    alert('โหลดข้อมูลไม่ได้: '+e.message);
-  } finally { hideLoading(); }
+  }catch(e){alert('โหลดข้อมูลไม่ได้: '+e.message);}
+  finally{hideLoading();}
 }
 
-// ═══════════════════════════════════════════════
-// NEW CHARACTER
-// ═══════════════════════════════════════════════
-async function newCharacter() {
+async function newCharacter(){
   showLoading('กำลังสร้างตัวละครใหม่...');
-  const token = genToken();
-  const emptyData = { name:'',alias:'',team:'',motivation:'',quote:'',nature:'',basicOrigin:'',portrait_civilian:'',portrait_hero:'',description:'',notes:'',stats:{edge:0,health:0,resolve:0,hp:0},abilities:{},talents:{},powers:[],perks:[],flaws:[],gear:[],connections:[] };
-  try {
-    const row = await sbInsert(token, emptyData);
-    const entry = { id: row.id, owner_token: token, name: '', alias: '' };
-    characters.push(entry);
-    saveIndex();
-    currentId   = row.id;
-    currentData = emptyData;
+  const token=genToken();
+  const emptyData={name:'',alias:'',team:'',motivation:'',quote:'',nature:'',basicOrigin:'',portrait_civilian:'',portrait_hero:'',description:'',notes:'',stats:{edge:0,health:0,resolve:0,hp:0},abilities:{},talents:{},powers:[],perks:[],flaws:[],gear:[],connections:[]};
+  try{
+    const row=await sbInsert(token,emptyData);
+    characters.push({id:row.id,owner_token:token,name:'',alias:''});
+    saveIndex();currentId=row.id;currentData=emptyData;
     applyReadOnly(false);
-    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('empty-state').style.display='none';
     document.getElementById('sheet').classList.add('visible');
-    populateForm(currentData);
-    renderSidebar();
-    setSaved(true);
-  } catch(e) {
-    alert('สร้างตัวละครไม่ได้: '+e.message);
-  } finally { hideLoading(); }
+    populateForm(currentData);renderSidebar();setSaved(true);
+  }catch(e){alert('สร้างตัวละครไม่ได้: '+e.message);}
+  finally{hideLoading();}
 }
 
-// ═══════════════════════════════════════════════
-// SAVE
-// ═══════════════════════════════════════════════
-async function saveSheet() {
-  if (!currentData || !isOwner || !currentId) return;
-  collectForm();
-  const entry = getIndexEntry(currentId);
-  if (!entry?.owner_token) return;
-  setSaved(null, 'กำลังบันทึก...');
-  document.getElementById('btn-save').disabled = true;
-  try {
-    await sbUpdate(currentId, entry.owner_token, currentData);
-    // update local index name/alias
-    entry.name  = currentData.name;
-    entry.alias = currentData.alias;
-    saveIndex();
-    renderSidebar();
-    setSaved(true);
-  } catch(e) {
-    setSaved(false, 'บันทึกไม่สำเร็จ: '+e.message);
-  } finally {
-    document.getElementById('btn-save').disabled = false;
-  }
-}
-
-function setSaved(saved, customText=null) {
-  const ind = document.getElementById('save-indicator');
-  if (customText) { ind.textContent = customText; ind.className = 'save-indicator'; return; }
-  if (saved === true)  { ind.textContent = '✓ บันทึกแล้ว';         ind.className = 'save-indicator saved'; }
-  else if (saved === false) { ind.textContent = 'มีการเปลี่ยนแปลง...'; ind.className = 'save-indicator'; }
-}
-
-// ═══════════════════════════════════════════════
-// DELETE
-// ═══════════════════════════════════════════════
-function confirmDelete(id) { pendingDeleteId = id; openModal('delete-modal'); }
-document.getElementById('modal-confirm-del').addEventListener('click', async ()=>{
-  closeModal('delete-modal');
-  if (!pendingDeleteId) return;
-  const entry = getIndexEntry(pendingDeleteId);
-  if (!entry?.owner_token) return;
+function confirmDelete(id){pendingDeleteId=id;openModal('delete-modal');}
+document.getElementById('modal-confirm-del').addEventListener('click',async()=>{
+  closeModal('delete-modal');if(!pendingDeleteId)return;
+  const entry=getIndexEntry(pendingDeleteId);if(!entry?.owner_token)return;
   showLoading('กำลังลบ...');
-  try {
-    await sbDelete(pendingDeleteId, entry.owner_token);
-    characters = characters.filter(c=>c.id!==pendingDeleteId);
-    saveIndex();
-    if (currentId===pendingDeleteId) {
-      currentId=null; currentData=null;
-      document.getElementById('sheet').classList.remove('visible');
-      document.getElementById('empty-state').style.display='flex';
-    }
+  try{
+    await sbDelete(pendingDeleteId,entry.owner_token);
+    characters=characters.filter(c=>c.id!==pendingDeleteId);saveIndex();
+    if(currentId===pendingDeleteId){currentId=null;currentData=null;document.getElementById('sheet').classList.remove('visible');document.getElementById('empty-state').style.display='flex';}
     renderSidebar();
-  } catch(e) { alert('ลบไม่สำเร็จ: '+e.message); }
-  finally { hideLoading(); pendingDeleteId=null; }
+  }catch(e){alert('ลบไม่สำเร็จ: '+e.message);}
+  finally{hideLoading();pendingDeleteId=null;}
 });
 
-// ═══════════════════════════════════════════════
+async function saveSheet(){
+  if(!currentData||!isOwner||!currentId)return;
+  collectForm();
+  const entry=getIndexEntry(currentId);if(!entry?.owner_token)return;
+  setSaved(null,'กำลังบันทึก...');document.getElementById('btn-save').disabled=true;
+  try{
+    await sbUpdate(currentId,entry.owner_token,currentData);
+    entry.name=currentData.name;entry.alias=currentData.alias;saveIndex();renderSidebar();setSaved(true);
+  }catch(e){setSaved(false,'บันทึกไม่สำเร็จ: '+e.message);}
+  finally{document.getElementById('btn-save').disabled=false;}
+}
+
+function setSaved(saved,customText=null){
+  const ind=document.getElementById('save-indicator');
+  if(customText){ind.textContent=customText;ind.className='save-indicator';return;}
+  if(saved===true){ind.textContent='✓ บันทึกแล้ว';ind.className='save-indicator saved';}
+  else if(saved===false){ind.textContent='มีการเปลี่ยนแปลง...';ind.className='save-indicator';}
+}
+
+// ═══════════════════════════════════════════
 // SHARE
-// ═══════════════════════════════════════════════
-document.getElementById('btn-share').addEventListener('click', ()=>{
-  if (!currentId) return;
-  const viewUrl = `${location.origin}${location.pathname}?view=${currentId}`;
-  document.getElementById('share-view-url').textContent = viewUrl;
-  const entry = getIndexEntry(currentId);
-  document.getElementById('share-token-box').textContent = entry?.owner_token || '(ไม่มี — คุณเป็น viewer เท่านั้น)';
+// ═══════════════════════════════════════════
+document.getElementById('btn-share').addEventListener('click',()=>{
+  if(!currentId)return;
+  document.getElementById('share-view-url').textContent=`${location.origin}${location.pathname}?view=${currentId}`;
+  const entry=getIndexEntry(currentId);
+  document.getElementById('share-token-box').textContent=entry?.owner_token||'(ไม่มี — คุณเป็น viewer เท่านั้น)';
   openModal('share-modal');
 });
-function copyShareUrl() {
-  const url = document.getElementById('share-view-url').textContent;
-  navigator.clipboard.writeText(url).then(()=>alert('คัดลอก View Link แล้ว!'));
-}
-function copyToken() {
-  const t = document.getElementById('share-token-box').textContent;
-  if (t.startsWith('(')) return;
-  navigator.clipboard.writeText(t).then(()=>alert('คัดลอก Token แล้ว! เก็บไว้ให้ดีนะครับ'));
-}
+function copyShareUrl(){navigator.clipboard.writeText(document.getElementById('share-view-url').textContent).then(()=>alert('คัดลอก View Link แล้ว!'));}
+function copyToken(){const t=document.getElementById('share-token-box').textContent;if(t.startsWith('('))return;navigator.clipboard.writeText(t).then(()=>alert('คัดลอก Token แล้ว!'));}
 
-// ═══════════════════════════════════════════════
-// IMPORT VIA TOKEN
-// ═══════════════════════════════════════════════
-document.getElementById('btn-import').addEventListener('click', ()=>{ document.getElementById('import-token-input').value=''; openModal('import-modal'); });
-document.getElementById('btn-do-import').addEventListener('click', async ()=>{
-  const token = document.getElementById('import-token-input').value.trim();
-  if (!token) return;
-  closeModal('import-modal');
-  showLoading('กำลัง Import...');
-  try {
-    // find character with this owner_token
-    const res = await fetch(`${API_BASE}?owner_token=eq.${encodeURIComponent(token)}&select=*`, { headers: sbHeaders() });
-    const rows = await res.json();
-    if (!rows.length) { alert('ไม่พบตัวละครที่ตรงกับ Token นี้'); hideLoading(); return; }
-    const row = rows[0];
-    // check duplicate
-    if (characters.find(c=>c.id===row.id)) {
-      // update token if we had view-only
-      const ex = getIndexEntry(row.id);
-      if (ex && !ex.owner_token) { ex.owner_token=token; saveIndex(); }
-      await selectChar(row.id);
-      hideLoading(); return;
-    }
-    const entry = { id:row.id, owner_token:token, name:row.data?.name||'', alias:row.data?.alias||'' };
-    characters.push(entry);
-    saveIndex();
-    renderSidebar();
-    await selectChar(row.id);
-  } catch(e) { alert('Import ไม่สำเร็จ: '+e.message); }
-  finally { hideLoading(); }
+// ═══════════════════════════════════════════
+// IMPORT
+// ═══════════════════════════════════════════
+document.getElementById('btn-import').addEventListener('click',()=>{document.getElementById('import-token-input').value='';openModal('import-modal');});
+document.getElementById('btn-do-import').addEventListener('click',async()=>{
+  const token=document.getElementById('import-token-input').value.trim();if(!token)return;
+  closeModal('import-modal');showLoading('กำลัง Import...');
+  try{
+    const res=await fetch(`${API_BASE}?owner_token=eq.${encodeURIComponent(token)}&select=*`,{headers:sbHeaders()});
+    const rows=await res.json();
+    if(!rows.length){alert('ไม่พบตัวละครที่ตรงกับ Token นี้');hideLoading();return;}
+    const row=rows[0];
+    if(characters.find(c=>c.id===row.id)){const ex=getIndexEntry(row.id);if(ex&&!ex.owner_token){ex.owner_token=token;saveIndex();}await selectChar(row.id);hideLoading();return;}
+    characters.push({id:row.id,owner_token:token,name:row.data?.name||'',alias:row.data?.alias||''});
+    saveIndex();renderSidebar();await selectChar(row.id);
+  }catch(e){alert('Import ไม่สำเร็จ: '+e.message);}
+  finally{hideLoading();}
 });
 
-// ═══════════════════════════════════════════════
-// URL PARAMS — ?view=ID (read-only shared link)
-// ═══════════════════════════════════════════════
-async function checkUrlParams() {
-  const params = new URLSearchParams(location.search);
-  const viewId = params.get('view');
-  if (!viewId) return false;
-  // add to index as view-only if not already there
-  if (!characters.find(c=>c.id===viewId)) {
-    characters.push({ id:viewId, owner_token:null, name:'...', alias:'Shared' });
-    saveIndex();
-  }
-  renderSidebar();
-  await selectChar(viewId);
-  return true;
+// ═══════════════════════════════════════════
+// URL PARAMS
+// ═══════════════════════════════════════════
+async function checkUrlParams(){
+  const viewId=new URLSearchParams(location.search).get('view');if(!viewId)return false;
+  if(!characters.find(c=>c.id===viewId)){characters.push({id:viewId,owner_token:null,name:'...',alias:'Shared'});saveIndex();}
+  renderSidebar();await selectChar(viewId);return true;
 }
 
-// ═══════════════════════════════════════════════
-// SAVE STATUS
-// ═══════════════════════════════════════════════
-document.getElementById('sheet').addEventListener('input', ()=>{ if(isOwner) setSaved(false); });
-document.addEventListener('keydown', e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='s'){ e.preventDefault(); saveSheet(); } });
-document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
+// ═══════════════════════════════════════════
+// EVENTS & HELPERS
+// ═══════════════════════════════════════════
+document.getElementById('btn-new').addEventListener('click',newCharacter);
+document.getElementById('btn-save').addEventListener('click',saveSheet);
+document.getElementById('sheet').addEventListener('input',()=>{if(isOwner)setSaved(false);});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet();}});
+document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 
-// ═══════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════
-function val(id)   { return document.getElementById(id)?.value||''; }
-function set(id,v) { const el=document.getElementById(id); if(el) el.value=v; }
-function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function val(id){return document.getElementById(id)?.value||'';}
+function set(id,v){const el=document.getElementById(id);if(el)el.value=v;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════
 // BOOT
-// ═══════════════════════════════════════════════
-document.getElementById('btn-new').addEventListener('click', newCharacter);
-document.getElementById('btn-save').addEventListener('click', saveSheet);
-loadIndex();
-initAbilities();
-initTalents();
-renderSidebar();
-(async ()=>{
-  const handled = await checkUrlParams();
-  if (!handled && characters.length > 0) {
-    // auto-select last character
-    await selectChar(characters[characters.length-1].id);
-  }
+// ═══════════════════════════════════════════
+loadIndex();initAbilities();initTalents();renderSidebar();
+(async()=>{
+  const handled=await checkUrlParams();
+  if(!handled&&characters.length>0)await selectChar(characters[characters.length-1].id);
 })();
 </script>
 </body>
