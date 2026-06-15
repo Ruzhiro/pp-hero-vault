@@ -7,15 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0d0d0d;
-    --paper: #f5f0e8;
-    --panel: #1a1a2e;
-    --accent: #e63946;
-    --gold: #f4a261;
-    --muted: #6b6b7b;
-    --border: #c8bfa8;
-    --field-bg: #fff9f0;
-    --tag-bg: #e8e0d0;
+    --ink: #0d0d0d; --paper: #f5f0e8; --panel: #1a1a2e;
+    --accent: #e63946; --gold: #f4a261; --muted: #6b6b7b;
+    --border: #c8bfa8; --field-bg: #fff9f0; --tag-bg: #e8e0d0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Barlow', sans-serif; background: var(--panel); min-height: 100vh; color: var(--ink); }
@@ -38,9 +32,11 @@
   .char-alias { font-size: 11px; color: #5a5a7a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .char-delete { width: 22px; height: 22px; border: none; background: transparent; color: #3a3a5a; cursor: pointer; font-size: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: color 0.15s, background 0.15s; }
   .char-delete:hover { color: var(--accent); background: rgba(230,57,70,0.1); }
-  .sidebar-footer { padding: 12px 10px; border-top: 1px solid #2a2a3e; }
+  .sidebar-footer { padding: 12px 10px; border-top: 1px solid #2a2a3e; display: flex; flex-direction: column; gap: 8px; }
   #btn-new { width: 100%; padding: 10px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 1.5px; cursor: pointer; transition: background 0.15s; }
   #btn-new:hover { background: #c1121f; }
+  #btn-import { width: 100%; padding: 8px; background: transparent; color: #5a5a7a; border: 1.5px dashed #2a2a3e; border-radius: 6px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
+  #btn-import:hover { border-color: var(--gold); color: var(--gold); }
 
   /* MAIN */
   #main { flex: 1; overflow-y: auto; background: var(--paper); }
@@ -58,31 +54,31 @@
   #sheet.visible { display: block; }
   .sheet-topbar { background: var(--ink); padding: 12px 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .sheet-topbar-left { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--accent); }
-  .topbar-actions { display: flex; gap: 8px; align-items: center; }
+  .topbar-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .btn-save { padding: 7px 18px; background: var(--accent); color: #fff; border: none; border-radius: 5px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: background 0.15s; }
   .btn-save:hover { background: #c1121f; }
+  .btn-save:disabled { background: #6b2a30; cursor: default; }
+  .btn-share { padding: 7px 14px; background: #1e1e35; color: var(--gold); border: 1.5px solid #3a3a5a; border-radius: 5px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
+  .btn-share:hover { border-color: var(--gold); }
   .save-indicator { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: #5a5a7a; letter-spacing: 0.5px; }
   .save-indicator.saved { color: #4caf50; }
+  .save-indicator.error { color: var(--accent); }
+  .readonly-badge { background: #2a2a3e; color: var(--gold); border: 1px solid #3a3a5a; border-radius: 4px; padding: 4px 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
 
-  /* GAME TITLE BANNER */
+  /* GAME TITLE */
   .game-title-banner { background: var(--ink); padding: 20px 32px 16px; text-align: center; border-bottom: 3px solid var(--accent); }
-  .game-title-main { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 9px; color: #fff; line-height: 1; text-transform: uppercase; }
+  .game-title-main { font-family: 'Bebas Neue', sans-serif; font-size: 46px; letter-spacing: 9px; color: #fff; line-height: 1; }
   .game-title-main span { color: var(--accent); }
   .game-title-sub { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 4px; color: #5a5a7a; text-transform: uppercase; margin-top: 4px; }
 
   .sheet-content { padding: 28px 32px 60px; max-width: 960px; margin: 0 auto; }
-
-  /* SECTION TITLE */
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-bottom: 14px; margin-top: 28px; }
-
-  /* FIELDS */
   .field-group { display: flex; flex-direction: column; gap: 4px; }
   .field-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
   .field-input { background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 5px; padding: 7px 10px; font-family: 'Barlow', sans-serif; font-size: 14px; color: var(--ink); transition: border-color 0.15s; width: 100%; }
   .field-input:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .field-input:disabled { opacity: 0.6; cursor: not-allowed; }
   textarea.field-input { resize: vertical; min-height: 60px; line-height: 1.5; }
-
-  /* IDENTITY */
   .identity-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
   .identity-grid .full { grid-column: 1 / -1; }
   .identity-grid .half { grid-column: span 1; }
@@ -92,6 +88,8 @@
   .portrait-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
   .portrait-frame { width: 135px; height: 180px; border: 2px dashed var(--border); border-radius: 6px; background: var(--field-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; overflow: hidden; position: relative; transition: border-color 0.2s; }
   .portrait-frame:hover { border-color: var(--accent); }
+  .portrait-frame.readonly { cursor: default; }
+  .portrait-frame.readonly:hover { border-color: var(--border); }
   .portrait-frame img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
   .portrait-placeholder { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--border); pointer-events: none; }
   .portrait-placeholder svg { width: 32px; height: 32px; opacity: 0.5; }
@@ -100,22 +98,25 @@
   .portrait-frame:hover .portrait-clear { display: flex; }
   .portrait-file { display: none; }
 
-  /* ORIGIN TOGGLES */
+  /* ORIGIN */
   .origin-group-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; display: block; }
   .origin-options { display: flex; flex-wrap: wrap; gap: 7px; }
   .origin-btn { padding: 5px 13px; border: 1.5px solid var(--border); border-radius: 20px; background: var(--field-bg); font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s; letter-spacing: 0.5px; }
-  .origin-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .origin-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
   .origin-btn.selected { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .origin-btn:disabled { cursor: not-allowed; opacity: 0.6; }
 
   /* ABILITIES */
   .abilities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .ability-card { background: var(--ink); border-radius: 8px; padding: 14px 14px 12px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-  .ability-name { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
-  .ability-score-input { background: #2a2a3e; border: 1.5px solid #3a3a5a; border-radius: 5px; padding: 6px 10px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px; color: #e8e8f0; width: 100%; text-align: center; transition: border-color 0.15s; }
+  .ability-name { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--gold); }
+  .ability-score-input { background: #2a2a3e; border: 1.5px solid #3a3a5a; border-radius: 5px; padding: 6px 10px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8e8f0; width: 100%; text-align: center; transition: border-color 0.15s; }
   .ability-score-input:focus { outline: none; border-color: var(--accent); }
+  .ability-score-input:disabled { opacity: 0.6; cursor: not-allowed; }
   .ability-score-input::placeholder { color: #3a3a5a; font-size: 13px; letter-spacing: 0; }
   .ability-desc-input { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 4px; padding: 5px 8px; font-size: 11px; color: #8888aa; width: 100%; font-family: 'Barlow', sans-serif; resize: none; min-height: 36px; line-height: 1.4; }
   .ability-desc-input:focus { outline: none; border-color: #4a4a6a; }
+  .ability-desc-input:disabled { opacity: 0.6; cursor: not-allowed; }
   .ability-desc-input::placeholder { color: #3a3a5a; }
 
   /* COMBAT STATS */
@@ -124,13 +125,15 @@
   .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .stat-input { background: transparent; border: none; border-bottom: 2px solid var(--border); padding: 4px 0; font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--ink); width: 60px; text-align: center; transition: border-color 0.15s; }
   .stat-input:focus { outline: none; border-color: var(--accent); }
+  .stat-input:disabled { opacity: 0.6; cursor: not-allowed; }
 
   /* TALENTS */
   .talents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .talent-row { display: flex; align-items: center; gap: 8px; background: var(--field-bg); border: 1.5px solid var(--border); border-radius: 6px; padding: 8px 12px; }
   .talent-name { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--ink); flex: 1; letter-spacing: 0.5px; }
-  .talent-score-input { background: var(--tag-bg); border: 1px solid var(--border); border-radius: 4px; padding: 4px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--ink); width: 64px; text-align: center; transition: border-color 0.15s; }
+  .talent-score-input { background: var(--tag-bg); border: 1px solid var(--border); border-radius: 4px; padding: 4px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--ink); width: 64px; text-align: center; }
   .talent-score-input:focus { outline: none; border-color: var(--accent); }
+  .talent-score-input:disabled { opacity: 0.6; cursor: not-allowed; }
   .talent-score-input::placeholder { color: #aaa; font-size: 11px; letter-spacing: 0; }
 
   /* POWERS */
@@ -145,8 +148,10 @@
   .mini-label { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
   .field-input-sm { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 8px; font-family: 'Barlow', sans-serif; font-size: 13px; color: var(--ink); width: 100%; transition: border-color 0.15s; }
   .field-input-sm:focus { outline: none; border-color: var(--accent); }
-  .field-input-narrow { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--ink); width: 100%; text-align: center; transition: border-color 0.15s; }
+  .field-input-sm:disabled { opacity: 0.6; cursor: not-allowed; }
+  .field-input-narrow { background: #fff; border: 1.5px solid var(--border); border-radius: 4px; padding: 5px 6px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--ink); width: 100%; text-align: center; }
   .field-input-narrow:focus { outline: none; border-color: var(--accent); }
+  .field-input-narrow:disabled { opacity: 0.6; cursor: not-allowed; }
   .rank-cost-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
   /* GENERIC LISTS */
@@ -154,29 +159,46 @@
   .list-item { display: flex; gap: 8px; align-items: flex-start; }
   .btn-remove { background: transparent; border: 1.5px solid var(--border); border-radius: 5px; width: 32px; height: 32px; color: var(--muted); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
   .btn-remove:hover { border-color: var(--accent); color: var(--accent); background: rgba(230,57,70,0.08); }
-  .btn-add { align-self: flex-start; padding: 7px 16px; background: transparent; border: 1.5px dashed var(--border); border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+  .btn-add { align-self: flex-start; padding: 7px 16px; background: transparent; border: 1.5px dashed var(--border); border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all 0.15s; margin-top: 4px; }
   .btn-add:hover { border-color: var(--accent); color: var(--accent); }
-
+  .btn-add:disabled, .btn-remove:disabled { opacity: 0.4; cursor: not-allowed; }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  #notes-input { min-height: 120px; }
 
   /* MODAL */
-  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
   .modal-backdrop.open { opacity: 1; pointer-events: all; }
-  .modal { background: var(--paper); border-radius: 12px; padding: 28px; width: 360px; max-width: 90vw; transform: translateY(16px); transition: transform 0.2s; }
+  .modal { background: var(--paper); border-radius: 12px; padding: 28px; width: 420px; max-width: 90vw; transform: translateY(16px); transition: transform 0.2s; }
   .modal-backdrop.open .modal { transform: translateY(0); }
-  .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--ink); margin-bottom: 16px; }
+  .modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: var(--ink); margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
   .modal-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
   .btn-cancel { padding: 8px 18px; background: transparent; border: 1.5px solid var(--border); border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; }
   .btn-cancel:hover { border-color: var(--ink); color: var(--ink); }
-  .btn-confirm-del { padding: 8px 18px; background: var(--accent); border: none; border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: #fff; cursor: pointer; }
-  .btn-confirm-del:hover { background: #c1121f; }
+  .btn-confirm { padding: 8px 18px; background: var(--accent); border: none; border-radius: 5px; font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: #fff; cursor: pointer; }
+  .btn-confirm:hover { background: #c1121f; }
 
-  #notes-input { min-height: 120px; }
+  /* SHARE MODAL */
+  .share-url-box { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; color: #8888aa; word-break: break-all; line-height: 1.5; margin-bottom: 10px; }
+  .btn-copy { width: 100%; padding: 9px; background: var(--gold); border: none; border-radius: 6px; font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; color: var(--ink); cursor: pointer; transition: background 0.15s; }
+  .btn-copy:hover { background: #e08c4a; }
+  .token-box { background: #1a1a2e; border: 1px solid #3a3a3a; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; color: #5a8a5a; word-break: break-all; line-height: 1.5; margin-top: 12px; }
+
+  /* IMPORT MODAL */
+  .import-input { background: #1a1a2e; border: 1.5px solid #2a2a3e; border-radius: 6px; padding: 10px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; color: #e8e8f0; width: 100%; margin-bottom: 6px; }
+  .import-input:focus { outline: none; border-color: var(--gold); }
+  .import-input::placeholder { color: #3a3a5a; }
+
+  /* LOADING OVERLAY */
+  #loading-overlay { position: fixed; inset: 0; background: rgba(13,13,13,0.85); z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+  #loading-overlay.hidden { display: none; }
+  .loader { width: 40px; height: 40px; border: 3px solid #2a2a3e; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: 2px; color: #5a5a7a; text-transform: uppercase; }
 </style>
 </head>
 <body>
 <div id="app">
-
   <aside id="sidebar">
     <div class="sidebar-header">
       <h1>HERO VAULT</h1>
@@ -185,6 +207,7 @@
     <div id="char-list"></div>
     <div class="sidebar-footer">
       <button id="btn-new">+ NEW HERO</button>
+      <button id="btn-import">↓ Import via Token</button>
     </div>
   </aside>
 
@@ -192,76 +215,60 @@
     <div id="empty-state">
       <div class="empty-icon">🦸</div>
       <h2>NO HEROES YET</h2>
-      <p>สร้างตัวละครใหม่เพื่อเริ่มต้น</p>
+      <p>สร้างตัวละครใหม่ หรือ Import ด้วย Owner Token</p>
     </div>
 
     <div id="sheet">
       <div class="sheet-topbar">
         <div class="sheet-topbar-left">Character Sheet</div>
         <div class="topbar-actions">
-          <span class="save-indicator" id="save-indicator">ยังไม่ได้บันทึก</span>
+          <span class="save-indicator" id="save-indicator"></span>
+          <span class="readonly-badge" id="readonly-badge" style="display:none">👁 READ ONLY</span>
+          <button class="btn-share" id="btn-share">🔗 Share</button>
           <button class="btn-save" id="btn-save">💾 บันทึก</button>
         </div>
       </div>
 
-      <!-- GAME TITLE -->
       <div class="game-title-banner">
         <div class="game-title-main">Prowlers <span>&amp;</span> Paragons</div>
         <div class="game-title-sub">Ultimate Edition — Hero Sheet</div>
       </div>
 
       <div class="sheet-content">
-
         <!-- IDENTITY -->
         <div class="section-title">Identity</div>
         <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
           <div style="flex:1;min-width:300px;">
             <div class="identity-grid">
-              <div class="field-group half">
-                <label class="field-label">Hero Name</label>
-                <input class="field-input" id="f-name" placeholder="ชื่อฮีโร่">
-              </div>
-              <div class="field-group half">
-                <label class="field-label">Alias / Secret Identity</label>
-                <input class="field-input" id="f-alias" placeholder="ชื่อจริง / ตัวตนจริง">
-              </div>
-              <div class="field-group half">
-                <label class="field-label">Team</label>
-                <input class="field-input" id="f-team" placeholder="ทีม / กลุ่ม">
-              </div>
-              <div class="field-group half">
-                <label class="field-label">Motivation</label>
-                <input class="field-input" id="f-motivation" placeholder="แรงจูงใจ">
-              </div>
-              <div class="field-group full">
-                <label class="field-label">Quote</label>
-                <input class="field-input" id="f-quote" placeholder='"ประโยคเด็ดของฮีโร่..."'>
-              </div>
+              <div class="field-group half"><label class="field-label">Hero Name</label><input class="field-input" id="f-name" placeholder="ชื่อฮีโร่"></div>
+              <div class="field-group half"><label class="field-label">Alias / Secret Identity</label><input class="field-input" id="f-alias" placeholder="ชื่อจริง / ตัวตนจริง"></div>
+              <div class="field-group half"><label class="field-label">Team</label><input class="field-input" id="f-team" placeholder="ทีม / กลุ่ม"></div>
+              <div class="field-group half"><label class="field-label">Motivation</label><input class="field-input" id="f-motivation" placeholder="แรงจูงใจ"></div>
+              <div class="field-group full"><label class="field-label">Quote</label><input class="field-input" id="f-quote" placeholder='"ประโยคเด็ดของฮีโร่..."'></div>
             </div>
           </div>
-          <!-- Portraits -->
           <div style="display:flex;gap:16px;flex-shrink:0;">
             <div class="portrait-slot">
               <span class="portrait-label">Civilian Form</span>
-              <div class="portrait-frame" id="portrait-civilian-frame" onclick="document.getElementById('portrait-civilian-file').click()">
+              <div class="portrait-frame" id="portrait-civilian-frame" onclick="portraitClick('civilian')">
                 <div class="portrait-placeholder" id="portrait-civilian-placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                   <span>คลิกเพื่ออัปโหลด</span>
                 </div>
                 <img id="portrait-civilian-img" style="display:none;">
-                <button class="portrait-clear" id="portrait-civilian-clear" onclick="clearPortrait(event,'civilian')">×</button>
+                <button class="portrait-clear" onclick="clearPortrait(event,'civilian')">×</button>
               </div>
               <input type="file" class="portrait-file" id="portrait-civilian-file" accept="image/*" onchange="loadPortrait(event,'civilian')">
             </div>
             <div class="portrait-slot">
               <span class="portrait-label">Hero Form</span>
-              <div class="portrait-frame" id="portrait-hero-frame" onclick="document.getElementById('portrait-hero-file').click()">
+              <div class="portrait-frame" id="portrait-hero-frame" onclick="portraitClick('hero')">
                 <div class="portrait-placeholder" id="portrait-hero-placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
                   <span>คลิกเพื่ออัปโหลด</span>
                 </div>
                 <img id="portrait-hero-img" style="display:none;">
-                <button class="portrait-clear" id="portrait-hero-clear" onclick="clearPortrait(event,'hero')">×</button>
+                <button class="portrait-clear" onclick="clearPortrait(event,'hero')">×</button>
               </div>
               <input type="file" class="portrait-file" id="portrait-hero-file" accept="image/*" onchange="loadPortrait(event,'hero')">
             </div>
@@ -313,19 +320,19 @@
         <!-- POWERS -->
         <div class="section-title">Powers</div>
         <div class="powers-section" id="powers-list"></div>
-        <button class="btn-add" onclick="addPower()">+ Add Power</button>
+        <button class="btn-add" id="btn-add-power" onclick="addPower()">+ Add Power</button>
 
         <!-- PERKS + FLAWS -->
         <div class="two-col">
           <div>
             <div class="section-title">Perks</div>
             <div class="list-section" id="perks-list"></div>
-            <button class="btn-add" onclick="addPerk()">+ Add Perk</button>
+            <button class="btn-add" id="btn-add-perk" onclick="addPerk()">+ Add Perk</button>
           </div>
           <div>
             <div class="section-title">Flaws</div>
             <div class="list-section" id="flaws-list"></div>
-            <button class="btn-add" onclick="addFlaw()">+ Add Flaw</button>
+            <button class="btn-add" id="btn-add-flaw" onclick="addFlaw()">+ Add Flaw</button>
           </div>
         </div>
 
@@ -334,12 +341,12 @@
           <div>
             <div class="section-title">Gear</div>
             <div class="list-section" id="gear-list"></div>
-            <button class="btn-add" onclick="addGear()">+ Add Gear</button>
+            <button class="btn-add" id="btn-add-gear" onclick="addGear()">+ Add Gear</button>
           </div>
           <div>
             <div class="section-title">Connections</div>
             <div class="list-section" id="connections-list"></div>
-            <button class="btn-add" onclick="addConnection()">+ Add Connection</button>
+            <button class="btn-add" id="btn-add-connection" onclick="addConnection()">+ Add Connection</button>
           </div>
         </div>
 
@@ -351,10 +358,9 @@
           </div>
           <div>
             <div class="section-title">Notes</div>
-            <textarea class="field-input" id="notes-input" placeholder="บันทึกอิสระ, backstory, เหตุการณ์สำคัญ..."></textarea>
+            <textarea class="field-input" id="notes-input" placeholder="บันทึกอิสระ, backstory..."></textarea>
           </div>
         </div>
-
       </div>
     </div>
   </main>
@@ -364,55 +370,196 @@
 <div class="modal-backdrop" id="delete-modal">
   <div class="modal">
     <h2>ลบตัวละคร?</h2>
-    <p style="color:var(--muted);font-size:14px;">การลบจะไม่สามารถกู้คืนได้</p>
+    <p>การลบจะไม่สามารถกู้คืนได้ และจะลบออกจาก Supabase ด้วย</p>
     <div class="modal-actions">
-      <button class="btn-cancel" id="modal-cancel">ยกเลิก</button>
-      <button class="btn-confirm-del" id="modal-confirm">ลบ</button>
+      <button class="btn-cancel" onclick="closeModal('delete-modal')">ยกเลิก</button>
+      <button class="btn-confirm" id="modal-confirm-del">ลบ</button>
     </div>
   </div>
 </div>
 
+<!-- SHARE MODAL -->
+<div class="modal-backdrop" id="share-modal">
+  <div class="modal">
+    <h2>🔗 Share Character</h2>
+    <p>ส่ง <strong>View Link</strong> ให้คนอื่นดูชีทได้ (อ่านอย่างเดียว)</p>
+    <div class="share-url-box" id="share-view-url"></div>
+    <button class="btn-copy" onclick="copyShareUrl()">📋 Copy View Link</button>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+      <p style="color:var(--accent);font-size:12px;margin-bottom:6px;">⚠️ Owner Token — เก็บไว้เองเท่านั้น ห้ามส่งให้คนอื่น</p>
+      <div class="token-box" id="share-token-box"></div>
+      <button class="btn-copy" style="background:#2a2a3e;color:#8888aa;margin-top:8px;" onclick="copyToken()">📋 Copy Token (สำหรับ sync เครื่องอื่น)</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('share-modal')">ปิด</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT TOKEN MODAL -->
+<div class="modal-backdrop" id="import-modal">
+  <div class="modal">
+    <h2>↓ Import via Owner Token</h2>
+    <p>ใส่ Owner Token เพื่อ sync ตัวละครมายังเครื่องนี้ (จะสามารถแก้ไขได้)</p>
+    <input class="import-input" id="import-token-input" placeholder="วาง Owner Token ที่นี่...">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('import-modal')">ยกเลิก</button>
+      <button class="btn-confirm" id="btn-do-import">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay" class="hidden">
+  <div class="loader"></div>
+  <div class="loader-text" id="loader-text">กำลังโหลด...</div>
+</div>
+
 <script>
-const STORAGE_KEY = 'pp_hero_vault';
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const SUPABASE_URL = 'https://kiuwbpdjbhwcjzvyjbco.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Nuz7p1gfEVuzCDhjVnhgoA_vx_TTMT7';
+const API_BASE     = `${SUPABASE_URL}/rest/v1/characters`;
+
 const ABILITIES = ['Agility','Intellect','Might','Perception','Toughness','Willpower'];
 const TALENTS   = ['Academics','Charm','Command','Covert','Investigation','Medicine','Professional','Science','Streetwise','Survival','Technology','Vehicles'];
+const LS_KEY    = 'pp_hero_vault_v2'; // local index: [{id, owner_token, name, alias}]
 
-let characters = [];
-let currentId  = null;
+let characters  = []; // local index from LS
+let currentId   = null;
+let currentData = null; // full char data object
+let isOwner     = false;
 let pendingDeleteId = null;
 
-// STORAGE
-function loadFromStorage() { try { const r=localStorage.getItem(STORAGE_KEY); if(r) characters=JSON.parse(r); } catch(e){characters=[];} }
-function saveToStorage()   { localStorage.setItem(STORAGE_KEY, JSON.stringify(characters)); }
-function getCurrentChar()  { return characters.find(c=>c.id===currentId); }
+// ═══════════════════════════════════════════════
+// SUPABASE HELPERS
+// ═══════════════════════════════════════════════
+function sbHeaders(ownerToken = null) {
+  const h = {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Prefer': 'return=representation'
+  };
+  if (ownerToken) h['x-owner-token'] = ownerToken;
+  return h;
+}
 
+async function sbGet(id) {
+  const res = await fetch(`${API_BASE}?id=eq.${id}&select=*`, { headers: sbHeaders() });
+  if (!res.ok) throw new Error('ไม่พบข้อมูล');
+  const rows = await res.json();
+  return rows[0] || null;
+}
+
+async function sbInsert(ownerToken, data) {
+  const res = await fetch(API_BASE, {
+    method: 'POST',
+    headers: sbHeaders(ownerToken),
+    body: JSON.stringify({ owner_token: ownerToken, data })
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Insert failed'); }
+  const rows = await res.json();
+  return rows[0];
+}
+
+async function sbUpdate(id, ownerToken, data) {
+  const res = await fetch(`${API_BASE}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: sbHeaders(ownerToken),
+    body: JSON.stringify({ data })
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Update failed'); }
+  return true;
+}
+
+async function sbDelete(id, ownerToken) {
+  const res = await fetch(`${API_BASE}?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: sbHeaders(ownerToken)
+  });
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message||'Delete failed'); }
+  return true;
+}
+
+function genToken() {
+  return 'tk_' + Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ═══════════════════════════════════════════════
+// LOCAL INDEX (LS)
+// ═══════════════════════════════════════════════
+function loadIndex() {
+  try { const r = localStorage.getItem(LS_KEY); if (r) characters = JSON.parse(r); } catch(e) { characters = []; }
+}
+function saveIndex() { localStorage.setItem(LS_KEY, JSON.stringify(characters)); }
+function getIndexEntry(id) { return characters.find(c=>c.id===id); }
+
+// ═══════════════════════════════════════════════
+// LOADING OVERLAY
+// ═══════════════════════════════════════════════
+function showLoading(text='กำลังโหลด...') { document.getElementById('loading-overlay').classList.remove('hidden'); document.getElementById('loader-text').textContent = text; }
+function hideLoading() { document.getElementById('loading-overlay').classList.add('hidden'); }
+
+// ═══════════════════════════════════════════════
+// MODAL HELPERS
+// ═══════════════════════════════════════════════
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ═══════════════════════════════════════════════
+// READ-ONLY MODE
+// ═══════════════════════════════════════════════
+function applyReadOnly(readonly) {
+  isOwner = !readonly;
+  document.getElementById('readonly-badge').style.display = readonly ? 'inline-block' : 'none';
+  document.getElementById('btn-save').style.display = readonly ? 'none' : 'inline-block';
+
+  const inputs = document.querySelectorAll('#sheet input, #sheet textarea, #sheet select');
+  inputs.forEach(el => el.disabled = readonly);
+  document.querySelectorAll('.origin-btn').forEach(b => b.disabled = readonly);
+  document.querySelectorAll('.btn-add, .btn-remove').forEach(b => b.disabled = readonly);
+  document.querySelectorAll('.portrait-frame').forEach(f => {
+    if (readonly) f.classList.add('readonly'); else f.classList.remove('readonly');
+  });
+}
+
+// ═══════════════════════════════════════════════
 // PORTRAITS
+// ═══════════════════════════════════════════════
+function portraitClick(slot) {
+  if (!isOwner) return;
+  document.getElementById('portrait-'+slot+'-file').click();
+}
 function loadPortrait(event, slot) {
-  const file = event.target.files[0]; if(!file) return;
+  if (!isOwner) return;
+  const file = event.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    const d = e.target.result;
-    showPortrait(slot, d);
-    const char = getCurrentChar();
-    if(char){ char['portrait_'+slot]=d; setSaved(false); }
+    showPortrait(slot, e.target.result);
+    if (currentData) { currentData['portrait_'+slot] = e.target.result; setSaved(false); }
   };
   reader.readAsDataURL(file);
-  event.target.value='';
+  event.target.value = '';
 }
 function showPortrait(slot, dataUrl) {
-  const img=document.getElementById('portrait-'+slot+'-img');
-  const ph =document.getElementById('portrait-'+slot+'-placeholder');
-  if(dataUrl){ img.src=dataUrl; img.style.display='block'; ph.style.display='none'; }
-  else        { img.src='';     img.style.display='none';  ph.style.display='flex'; }
+  const img = document.getElementById('portrait-'+slot+'-img');
+  const ph  = document.getElementById('portrait-'+slot+'-placeholder');
+  if (dataUrl) { img.src = dataUrl; img.style.display = 'block'; ph.style.display = 'none'; }
+  else          { img.src = '';     img.style.display = 'none';  ph.style.display = 'flex'; }
 }
 function clearPortrait(event, slot) {
   event.stopPropagation();
+  if (!isOwner) return;
   showPortrait(slot, null);
-  const char=getCurrentChar();
-  if(char){ char['portrait_'+slot]=''; setSaved(false); }
+  if (currentData) { currentData['portrait_'+slot] = ''; setSaved(false); }
 }
 
+// ═══════════════════════════════════════════════
 // INIT GRIDS
+// ═══════════════════════════════════════════════
 function initAbilities() {
   document.getElementById('abilities-grid').innerHTML = ABILITIES.map(ab=>`
     <div class="ability-card">
@@ -429,54 +576,48 @@ function initTalents() {
     </div>`).join('');
 }
 
+// ═══════════════════════════════════════════════
 // POWERS
+// ═══════════════════════════════════════════════
 function renderPowers(char) {
-  const container=document.getElementById('powers-list');
-  container.innerHTML='';
+  const ro = !isOwner;
+  const d = ro ? 'disabled' : '';
+  const container = document.getElementById('powers-list');
+  container.innerHTML = '';
   (char.powers||[]).forEach((pw,idx)=>{
-    const card=document.createElement('div');
-    card.className='power-card';
-    card.innerHTML=`
+    const card = document.createElement('div');
+    card.className = 'power-card';
+    card.innerHTML = `
       <div class="power-main">
-        <div><div class="mini-label">Power Name</div>
-          <input class="field-input-sm" placeholder="ชื่อ Power" value="${esc(pw.name||'')}" oninput="pwChange(${idx},'name',this.value)"></div>
-        <div><div class="mini-label">Source</div>
-          <input class="field-input-sm" placeholder="Source" value="${esc(pw.source||'')}" oninput="pwChange(${idx},'source',this.value)"></div>
-        <div><div class="mini-label">Rank</div>
-          <input class="field-input-narrow" placeholder="—" value="${esc(pw.rank||'')}" oninput="pwChange(${idx},'rank',this.value)"></div>
-        <div><div class="mini-label">Cost</div>
-          <input class="field-input-narrow" placeholder="—" value="${esc(pw.cost||'')}" oninput="pwChange(${idx},'cost',this.value)"></div>
-        <button class="btn-remove" onclick="removePower(${idx})">✕</button>
+        <div><div class="mini-label">Power Name</div><input class="field-input-sm" placeholder="ชื่อ Power" value="${esc(pw.name||'')}" oninput="pwChange(${idx},'name',this.value)" ${d}></div>
+        <div><div class="mini-label">Source</div><input class="field-input-sm" placeholder="Source" value="${esc(pw.source||'')}" oninput="pwChange(${idx},'source',this.value)" ${d}></div>
+        <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.rank||'')}" oninput="pwChange(${idx},'rank',this.value)" ${d}></div>
+        <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.cost||'')}" oninput="pwChange(${idx},'cost',this.value)" ${d}></div>
+        <button class="btn-remove" onclick="removePower(${idx})" ${d}>✕</button>
       </div>
       <div class="power-desc-row">
         <div class="mini-label">Description</div>
-        <input class="field-input-sm" placeholder="รายละเอียด..." value="${esc(pw.desc||'')}" oninput="pwChange(${idx},'desc',this.value)">
+        <input class="field-input-sm" placeholder="รายละเอียด..." value="${esc(pw.desc||'')}" oninput="pwChange(${idx},'desc',this.value)" ${d}>
       </div>
       <div class="power-sub-block">
         <div class="pro-con-grid">
           <div>
             <div class="power-sub-header" style="color:#4caf50;">✦ Pro</div>
             <div class="pro-con-inner">
-              <div><div class="mini-label">Description</div>
-                <input class="field-input-sm" placeholder="Pro description..." value="${esc(pw.proDesc||'')}" oninput="pwChange(${idx},'proDesc',this.value)"></div>
+              <div><div class="mini-label">Description</div><input class="field-input-sm" placeholder="Pro description..." value="${esc(pw.proDesc||'')}" oninput="pwChange(${idx},'proDesc',this.value)" ${d}></div>
               <div class="rank-cost-row">
-                <div><div class="mini-label">Rank</div>
-                  <input class="field-input-narrow" placeholder="—" value="${esc(pw.proRank||'')}" oninput="pwChange(${idx},'proRank',this.value)"></div>
-                <div><div class="mini-label">Cost</div>
-                  <input class="field-input-narrow" placeholder="—" value="${esc(pw.proCost||'')}" oninput="pwChange(${idx},'proCost',this.value)"></div>
+                <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.proRank||'')}" oninput="pwChange(${idx},'proRank',this.value)" ${d}></div>
+                <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.proCost||'')}" oninput="pwChange(${idx},'proCost',this.value)" ${d}></div>
               </div>
             </div>
           </div>
           <div>
             <div class="power-sub-header" style="color:var(--accent);">✦ Con</div>
             <div class="pro-con-inner">
-              <div><div class="mini-label">Description</div>
-                <input class="field-input-sm" placeholder="Con description..." value="${esc(pw.conDesc||'')}" oninput="pwChange(${idx},'conDesc',this.value)"></div>
+              <div><div class="mini-label">Description</div><input class="field-input-sm" placeholder="Con description..." value="${esc(pw.conDesc||'')}" oninput="pwChange(${idx},'conDesc',this.value)" ${d}></div>
               <div class="rank-cost-row">
-                <div><div class="mini-label">Rank</div>
-                  <input class="field-input-narrow" placeholder="—" value="${esc(pw.conRank||'')}" oninput="pwChange(${idx},'conRank',this.value)"></div>
-                <div><div class="mini-label">Cost</div>
-                  <input class="field-input-narrow" placeholder="—" value="${esc(pw.conCost||'')}" oninput="pwChange(${idx},'conCost',this.value)"></div>
+                <div><div class="mini-label">Rank</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.conRank||'')}" oninput="pwChange(${idx},'conRank',this.value)" ${d}></div>
+                <div><div class="mini-label">Cost</div><input class="field-input-narrow" placeholder="—" value="${esc(pw.conCost||'')}" oninput="pwChange(${idx},'conCost',this.value)" ${d}></div>
               </div>
             </div>
           </div>
@@ -485,62 +626,75 @@ function renderPowers(char) {
     container.appendChild(card);
   });
 }
-function pwChange(idx,key,value){ const char=getCurrentChar(); if(!char||!char.powers[idx]) return; char.powers[idx][key]=value; setSaved(false); }
-function addPower(){ const char=getCurrentChar(); if(!char) return; char.powers.push({name:'',source:'',rank:'',cost:'',desc:'',proDesc:'',proRank:'',proCost:'',conDesc:'',conRank:'',conCost:''}); renderPowers(char); setSaved(false); }
-function removePower(idx){ const char=getCurrentChar(); if(!char) return; char.powers.splice(idx,1); renderPowers(char); setSaved(false); }
+function pwChange(idx,key,value){ if(!currentData||!currentData.powers[idx]) return; currentData.powers[idx][key]=value; setSaved(false); }
+function addPower(){ if(!currentData||!isOwner) return; currentData.powers.push({name:'',source:'',rank:'',cost:'',desc:'',proDesc:'',proRank:'',proCost:'',conDesc:'',conRank:'',conCost:''}); renderPowers(currentData); setSaved(false); }
+function removePower(idx){ if(!currentData||!isOwner) return; currentData.powers.splice(idx,1); renderPowers(currentData); setSaved(false); }
 
+// ═══════════════════════════════════════════════
 // GENERIC LISTS
-const listConfig={
+// ═══════════════════════════════════════════════
+const listConfig = {
   'perks-list':       {fields:[{key:'name',ph:'Perk name',flex:1},{key:'notes',ph:'Description',flex:2}],arr:'perks'},
   'flaws-list':       {fields:[{key:'name',ph:'Flaw',flex:1},{key:'notes',ph:'Description',flex:2}],arr:'flaws'},
   'gear-list':        {fields:[{key:'name',ph:'Item name',flex:1},{key:'notes',ph:'Notes',flex:2}],arr:'gear'},
   'connections-list': {fields:[{key:'name',ph:'Name / Org',flex:1},{key:'notes',ph:'Relationship',flex:2}],arr:'connections'},
 };
-const removeFnMap={'perks-list':'removePerk','flaws-list':'removeFlaw','gear-list':'removeGear','connections-list':'removeConnection'};
+const removeFnMap = {'perks-list':'removePerk','flaws-list':'removeFlaw','gear-list':'removeGear','connections-list':'removeConnection'};
 
-function renderGenericList(containerId,items,fields,removeFn){
-  const c=document.getElementById(containerId); c.innerHTML='';
+function renderGenericList(containerId, items, fields, removeFn) {
+  const ro = !isOwner; const d = ro ? 'disabled' : '';
+  const c = document.getElementById(containerId); c.innerHTML = '';
   (items||[]).forEach((item,idx)=>{
-    const row=document.createElement('div'); row.className='list-item';
-    const fh=fields.map(f=>`<div style="flex:${f.flex};min-width:120px"><input class="field-input" style="width:100%" placeholder="${f.ph}" value="${esc(item[f.key]||'')}" oninput="genericListChange('${containerId}',${idx},'${f.key}',this.value)"></div>`).join('');
-    row.innerHTML=`<div style="display:flex;gap:8px;flex:1;flex-wrap:wrap">${fh}</div><button class="btn-remove" onclick="${removeFn}(${idx})">✕</button>`;
+    const row = document.createElement('div'); row.className = 'list-item';
+    const fh = fields.map(f=>`<div style="flex:${f.flex};min-width:120px"><input class="field-input" style="width:100%" placeholder="${f.ph}" value="${esc(item[f.key]||'')}" oninput="genericListChange('${containerId}',${idx},'${f.key}',this.value)" ${d}></div>`).join('');
+    row.innerHTML = `<div style="display:flex;gap:8px;flex:1;flex-wrap:wrap">${fh}</div><button class="btn-remove" onclick="${removeFn}(${idx})" ${d}>✕</button>`;
     c.appendChild(row);
   });
 }
-function genericListChange(containerId,idx,key,value){ const char=getCurrentChar(); if(!char) return; char[listConfig[containerId].arr][idx][key]=value; setSaved(false); }
+function genericListChange(containerId,idx,key,value){ if(!currentData) return; currentData[listConfig[containerId].arr][idx][key]=value; setSaved(false); }
 function renderAllLists(char){ renderPowers(char); for(const [id,cfg] of Object.entries(listConfig)) renderGenericList(id,char[cfg.arr],cfg.fields,removeFnMap[id]); }
-function addGenericItem(arr,containerId){ const char=getCurrentChar(); if(!char) return; char[arr].push({name:'',notes:''}); renderGenericList(containerId,char[arr],listConfig[containerId].fields,removeFnMap[containerId]); setSaved(false); }
-function removeGenericItem(arr,containerId,idx){ const char=getCurrentChar(); if(!char) return; char[arr].splice(idx,1); renderGenericList(containerId,char[arr],listConfig[containerId].fields,removeFnMap[containerId]); setSaved(false); }
-function addPerk(){addGenericItem('perks','perks-list');} function removePerk(i){removeGenericItem('perks','perks-list',i);}
-function addFlaw(){addGenericItem('flaws','flaws-list');} function removeFlaw(i){removeGenericItem('flaws','flaws-list',i);}
-function addGear(){addGenericItem('gear','gear-list');}   function removeGear(i){removeGenericItem('gear','gear-list',i);}
+function addGenericItem(arr,cid){ if(!currentData||!isOwner) return; currentData[arr].push({name:'',notes:''}); renderGenericList(cid,currentData[arr],listConfig[cid].fields,removeFnMap[cid]); setSaved(false); }
+function removeGenericItem(arr,cid,idx){ if(!currentData||!isOwner) return; currentData[arr].splice(idx,1); renderGenericList(cid,currentData[arr],listConfig[cid].fields,removeFnMap[cid]); setSaved(false); }
+function addPerk(){addGenericItem('perks','perks-list');}   function removePerk(i){removeGenericItem('perks','perks-list',i);}
+function addFlaw(){addGenericItem('flaws','flaws-list');}   function removeFlaw(i){removeGenericItem('flaws','flaws-list',i);}
+function addGear(){addGenericItem('gear','gear-list');}     function removeGear(i){removeGenericItem('gear','gear-list',i);}
 function addConnection(){addGenericItem('connections','connections-list');} function removeConnection(i){removeGenericItem('connections','connections-list',i);}
 
+// ═══════════════════════════════════════════════
 // ORIGIN BUTTONS
+// ═══════════════════════════════════════════════
 document.addEventListener('click', e=>{
-  const btn=e.target.closest('.origin-btn'); if(!btn) return;
-  const char=getCurrentChar(); if(!char) return;
-  const group=btn.dataset.group, v=btn.dataset.val;
-  char[group]= char[group]===v ? '' : v;
-  document.querySelectorAll(`.origin-btn[data-group="${group}"]`).forEach(b=>b.classList.toggle('selected',b.dataset.val===char[group]));
+  const btn = e.target.closest('.origin-btn');
+  if (!btn || btn.disabled || !currentData || !isOwner) return;
+  const group = btn.dataset.group, v = btn.dataset.val;
+  currentData[group] = currentData[group]===v ? '' : v;
+  document.querySelectorAll(`.origin-btn[data-group="${group}"]`).forEach(b=>b.classList.toggle('selected',b.dataset.val===currentData[group]));
   setSaved(false);
 });
 
+// ═══════════════════════════════════════════════
 // COLLECT FORM
-function collectForm(){
-  const char=getCurrentChar(); if(!char) return;
-  char.name=val('f-name'); char.alias=val('f-alias'); char.team=val('f-team');
-  char.motivation=val('f-motivation'); char.quote=val('f-quote');
-  char.description=val('f-description'); char.notes=val('notes-input');
-  char.stats={edge:val('stat-edge'),health:val('stat-health'),resolve:val('stat-resolve'),hp:val('stat-hp')};
-  char.abilities={};
-  ABILITIES.forEach(ab=>{ char.abilities[ab]={score:document.querySelector(`[data-ability="${ab}"]`)?.value||'',desc:document.querySelector(`[data-ability-desc="${ab}"]`)?.value||''}; });
-  char.talents={};
-  TALENTS.forEach(t=>{ char.talents[t]=document.querySelector(`[data-talent="${t}"]`)?.value||''; });
+// ═══════════════════════════════════════════════
+function collectForm() {
+  if (!currentData || !isOwner) return;
+  currentData.name        = val('f-name');
+  currentData.alias       = val('f-alias');
+  currentData.team        = val('f-team');
+  currentData.motivation  = val('f-motivation');
+  currentData.quote       = val('f-quote');
+  currentData.description = val('f-description');
+  currentData.notes       = val('notes-input');
+  currentData.stats = { edge:val('stat-edge'), health:val('stat-health'), resolve:val('stat-resolve'), hp:val('stat-hp') };
+  currentData.abilities = {};
+  ABILITIES.forEach(ab=>{ currentData.abilities[ab]={ score: document.querySelector(`[data-ability="${ab}"]`)?.value||'', desc: document.querySelector(`[data-ability-desc="${ab}"]`)?.value||'' }; });
+  currentData.talents = {};
+  TALENTS.forEach(t=>{ currentData.talents[t] = document.querySelector(`[data-talent="${t}"]`)?.value||''; });
 }
 
+// ═══════════════════════════════════════════════
 // POPULATE FORM
-function populateForm(char){
+// ═══════════════════════════════════════════════
+function populateForm(char) {
   set('f-name',char.name||''); set('f-alias',char.alias||''); set('f-team',char.team||'');
   set('f-motivation',char.motivation||''); set('f-quote',char.quote||'');
   set('f-description',char.description||''); set('notes-input',char.notes||'');
@@ -555,47 +709,232 @@ function populateForm(char){
   setSaved(true);
 }
 
+// ═══════════════════════════════════════════════
 // SIDEBAR
-function renderSidebar(){
-  const list=document.getElementById('char-list'); list.innerHTML='';
-  if(!characters.length){ list.innerHTML='<p style="color:#3a3a5a;font-size:12px;text-align:center;padding:20px;">ยังไม่มีตัวละคร</p>'; return; }
+// ═══════════════════════════════════════════════
+function renderSidebar() {
+  const list = document.getElementById('char-list'); list.innerHTML = '';
+  if (!characters.length) { list.innerHTML = '<p style="color:#3a3a5a;font-size:12px;text-align:center;padding:20px;">ยังไม่มีตัวละคร</p>'; return; }
   characters.forEach(c=>{
-    const div=document.createElement('div'); div.className='char-item'+(c.id===currentId?' active':'');
-    div.innerHTML=`<div class="char-avatar">${(c.name||'?')[0].toUpperCase()}</div><div class="char-info"><div class="char-name">${esc(c.name||'Unnamed Hero')}</div><div class="char-alias">${esc(c.alias||'—')}</div></div><button class="char-delete" title="ลบ" onclick="event.stopPropagation();confirmDelete('${c.id}')">×</button>`;
-    div.addEventListener('click',()=>selectChar(c.id)); list.appendChild(div);
+    const div = document.createElement('div');
+    div.className = 'char-item'+(c.id===currentId?' active':'');
+    const isOwnerEntry = !!c.owner_token;
+    div.innerHTML = `
+      <div class="char-avatar">${(c.name||'?')[0].toUpperCase()}</div>
+      <div class="char-info">
+        <div class="char-name">${esc(c.name||'Unnamed Hero')}</div>
+        <div class="char-alias">${esc(c.alias||'—')} ${isOwnerEntry?'':'👁'}</div>
+      </div>
+      ${isOwnerEntry?`<button class="char-delete" title="ลบ" onclick="event.stopPropagation();confirmDelete('${c.id}')">×</button>`:''}`;
+    div.addEventListener('click', ()=>selectChar(c.id));
+    list.appendChild(div);
   });
 }
 
-// SELECT / NEW / DELETE
-function selectChar(id){ if(currentId&&currentId!==id){collectForm();saveToStorage();} currentId=id; document.getElementById('empty-state').style.display='none'; document.getElementById('sheet').classList.add('visible'); populateForm(getCurrentChar()); renderSidebar(); }
-function newCharacter(){ if(currentId){collectForm();saveToStorage();} const id='hero_'+Date.now(); characters.push({id,name:'',alias:'',team:'',motivation:'',quote:'',nature:'',basicOrigin:'',portrait_civilian:'',portrait_hero:'',description:'',notes:'',stats:{edge:0,health:0,resolve:0,hp:0},abilities:{},talents:{},powers:[],perks:[],flaws:[],gear:[],connections:[]}); saveToStorage(); selectChar(id); }
-function confirmDelete(id){ pendingDeleteId=id; document.getElementById('delete-modal').classList.add('open'); }
-function doDelete(){ characters=characters.filter(c=>c.id!==pendingDeleteId); if(currentId===pendingDeleteId){currentId=null;document.getElementById('sheet').classList.remove('visible');document.getElementById('empty-state').style.display='flex';} saveToStorage(); renderSidebar(); pendingDeleteId=null; document.getElementById('delete-modal').classList.remove('open'); }
+// ═══════════════════════════════════════════════
+// SELECT CHARACTER (load from Supabase)
+// ═══════════════════════════════════════════════
+async function selectChar(id) {
+  if (currentId === id) return;
+  showLoading('กำลังโหลดตัวละคร...');
+  try {
+    const row = await sbGet(id);
+    if (!row) { alert('ไม่พบข้อมูลใน Supabase'); hideLoading(); return; }
+    currentId   = id;
+    currentData = row.data || {};
+    const entry = getIndexEntry(id);
+    const owner = entry?.owner_token || null;
+    applyReadOnly(!owner);
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('sheet').classList.add('visible');
+    populateForm(currentData);
+    renderSidebar();
+  } catch(e) {
+    alert('โหลดข้อมูลไม่ได้: '+e.message);
+  } finally { hideLoading(); }
+}
 
-// SAVE & STATUS
-function saveSheet(){ collectForm(); saveToStorage(); renderSidebar(); setSaved(true); }
-function setSaved(saved){ const ind=document.getElementById('save-indicator'); ind.textContent=saved?'✓ บันทึกแล้ว':'มีการเปลี่ยนแปลง...'; ind.className='save-indicator'+(saved?' saved':''); }
+// ═══════════════════════════════════════════════
+// NEW CHARACTER
+// ═══════════════════════════════════════════════
+async function newCharacter() {
+  showLoading('กำลังสร้างตัวละครใหม่...');
+  const token = genToken();
+  const emptyData = { name:'',alias:'',team:'',motivation:'',quote:'',nature:'',basicOrigin:'',portrait_civilian:'',portrait_hero:'',description:'',notes:'',stats:{edge:0,health:0,resolve:0,hp:0},abilities:{},talents:{},powers:[],perks:[],flaws:[],gear:[],connections:[] };
+  try {
+    const row = await sbInsert(token, emptyData);
+    const entry = { id: row.id, owner_token: token, name: '', alias: '' };
+    characters.push(entry);
+    saveIndex();
+    currentId   = row.id;
+    currentData = emptyData;
+    applyReadOnly(false);
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('sheet').classList.add('visible');
+    populateForm(currentData);
+    renderSidebar();
+    setSaved(true);
+  } catch(e) {
+    alert('สร้างตัวละครไม่ได้: '+e.message);
+  } finally { hideLoading(); }
+}
 
+// ═══════════════════════════════════════════════
+// SAVE
+// ═══════════════════════════════════════════════
+async function saveSheet() {
+  if (!currentData || !isOwner || !currentId) return;
+  collectForm();
+  const entry = getIndexEntry(currentId);
+  if (!entry?.owner_token) return;
+  setSaved(null, 'กำลังบันทึก...');
+  document.getElementById('btn-save').disabled = true;
+  try {
+    await sbUpdate(currentId, entry.owner_token, currentData);
+    // update local index name/alias
+    entry.name  = currentData.name;
+    entry.alias = currentData.alias;
+    saveIndex();
+    renderSidebar();
+    setSaved(true);
+  } catch(e) {
+    setSaved(false, 'บันทึกไม่สำเร็จ: '+e.message);
+  } finally {
+    document.getElementById('btn-save').disabled = false;
+  }
+}
+
+function setSaved(saved, customText=null) {
+  const ind = document.getElementById('save-indicator');
+  if (customText) { ind.textContent = customText; ind.className = 'save-indicator'; return; }
+  if (saved === true)  { ind.textContent = '✓ บันทึกแล้ว';         ind.className = 'save-indicator saved'; }
+  else if (saved === false) { ind.textContent = 'มีการเปลี่ยนแปลง...'; ind.className = 'save-indicator'; }
+}
+
+// ═══════════════════════════════════════════════
+// DELETE
+// ═══════════════════════════════════════════════
+function confirmDelete(id) { pendingDeleteId = id; openModal('delete-modal'); }
+document.getElementById('modal-confirm-del').addEventListener('click', async ()=>{
+  closeModal('delete-modal');
+  if (!pendingDeleteId) return;
+  const entry = getIndexEntry(pendingDeleteId);
+  if (!entry?.owner_token) return;
+  showLoading('กำลังลบ...');
+  try {
+    await sbDelete(pendingDeleteId, entry.owner_token);
+    characters = characters.filter(c=>c.id!==pendingDeleteId);
+    saveIndex();
+    if (currentId===pendingDeleteId) {
+      currentId=null; currentData=null;
+      document.getElementById('sheet').classList.remove('visible');
+      document.getElementById('empty-state').style.display='flex';
+    }
+    renderSidebar();
+  } catch(e) { alert('ลบไม่สำเร็จ: '+e.message); }
+  finally { hideLoading(); pendingDeleteId=null; }
+});
+
+// ═══════════════════════════════════════════════
+// SHARE
+// ═══════════════════════════════════════════════
+document.getElementById('btn-share').addEventListener('click', ()=>{
+  if (!currentId) return;
+  const viewUrl = `${location.origin}${location.pathname}?view=${currentId}`;
+  document.getElementById('share-view-url').textContent = viewUrl;
+  const entry = getIndexEntry(currentId);
+  document.getElementById('share-token-box').textContent = entry?.owner_token || '(ไม่มี — คุณเป็น viewer เท่านั้น)';
+  openModal('share-modal');
+});
+function copyShareUrl() {
+  const url = document.getElementById('share-view-url').textContent;
+  navigator.clipboard.writeText(url).then(()=>alert('คัดลอก View Link แล้ว!'));
+}
+function copyToken() {
+  const t = document.getElementById('share-token-box').textContent;
+  if (t.startsWith('(')) return;
+  navigator.clipboard.writeText(t).then(()=>alert('คัดลอก Token แล้ว! เก็บไว้ให้ดีนะครับ'));
+}
+
+// ═══════════════════════════════════════════════
+// IMPORT VIA TOKEN
+// ═══════════════════════════════════════════════
+document.getElementById('btn-import').addEventListener('click', ()=>{ document.getElementById('import-token-input').value=''; openModal('import-modal'); });
+document.getElementById('btn-do-import').addEventListener('click', async ()=>{
+  const token = document.getElementById('import-token-input').value.trim();
+  if (!token) return;
+  closeModal('import-modal');
+  showLoading('กำลัง Import...');
+  try {
+    // find character with this owner_token
+    const res = await fetch(`${API_BASE}?owner_token=eq.${encodeURIComponent(token)}&select=*`, { headers: sbHeaders() });
+    const rows = await res.json();
+    if (!rows.length) { alert('ไม่พบตัวละครที่ตรงกับ Token นี้'); hideLoading(); return; }
+    const row = rows[0];
+    // check duplicate
+    if (characters.find(c=>c.id===row.id)) {
+      // update token if we had view-only
+      const ex = getIndexEntry(row.id);
+      if (ex && !ex.owner_token) { ex.owner_token=token; saveIndex(); }
+      await selectChar(row.id);
+      hideLoading(); return;
+    }
+    const entry = { id:row.id, owner_token:token, name:row.data?.name||'', alias:row.data?.alias||'' };
+    characters.push(entry);
+    saveIndex();
+    renderSidebar();
+    await selectChar(row.id);
+  } catch(e) { alert('Import ไม่สำเร็จ: '+e.message); }
+  finally { hideLoading(); }
+});
+
+// ═══════════════════════════════════════════════
+// URL PARAMS — ?view=ID (read-only shared link)
+// ═══════════════════════════════════════════════
+async function checkUrlParams() {
+  const params = new URLSearchParams(location.search);
+  const viewId = params.get('view');
+  if (!viewId) return false;
+  // add to index as view-only if not already there
+  if (!characters.find(c=>c.id===viewId)) {
+    characters.push({ id:viewId, owner_token:null, name:'...', alias:'Shared' });
+    saveIndex();
+  }
+  renderSidebar();
+  await selectChar(viewId);
+  return true;
+}
+
+// ═══════════════════════════════════════════════
+// SAVE STATUS
+// ═══════════════════════════════════════════════
+document.getElementById('sheet').addEventListener('input', ()=>{ if(isOwner) setSaved(false); });
+document.addEventListener('keydown', e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='s'){ e.preventDefault(); saveSheet(); } });
+document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
+
+// ═══════════════════════════════════════════════
 // HELPERS
-function val(id){ return document.getElementById(id)?.value||''; }
-function set(id,v){ const el=document.getElementById(id); if(el) el.value=v; }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ═══════════════════════════════════════════════
+function val(id)   { return document.getElementById(id)?.value||''; }
+function set(id,v) { const el=document.getElementById(id); if(el) el.value=v; }
+function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// EVENTS
+// ═══════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════
 document.getElementById('btn-new').addEventListener('click', newCharacter);
 document.getElementById('btn-save').addEventListener('click', saveSheet);
-document.getElementById('modal-cancel').addEventListener('click',()=>document.getElementById('delete-modal').classList.remove('open'));
-document.getElementById('modal-confirm').addEventListener('click', doDelete);
-document.getElementById('delete-modal').addEventListener('click',e=>{ if(e.target===document.getElementById('delete-modal')) document.getElementById('delete-modal').classList.remove('open'); });
-document.getElementById('sheet').addEventListener('input',()=>setSaved(false));
-document.addEventListener('keydown',e=>{ if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet();} });
-
-// BOOT
-loadFromStorage();
+loadIndex();
 initAbilities();
 initTalents();
 renderSidebar();
-if(characters.length>0) selectChar(characters[characters.length-1].id);
+(async ()=>{
+  const handled = await checkUrlParams();
+  if (!handled && characters.length > 0) {
+    // auto-select last character
+    await selectChar(characters[characters.length-1].id);
+  }
+})();
 </script>
 </body>
 </html>
