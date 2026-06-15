@@ -471,15 +471,25 @@ function autoGrowAll(root=document){
 // ═══════════════════════════════════════════
 // SUPABASE
 // ═══════════════════════════════════════════
-function sbHeaders(ownerToken=null){
+function sbHeaders(){
   const h={'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=representation'};
-  if(ownerToken) h['x-owner-token']=ownerToken;
   return h;
 }
 async function sbGet(id){const r=await fetch(`${API_BASE}?id=eq.${id}&select=*`,{headers:sbHeaders()});if(!r.ok)throw new Error('ไม่พบข้อมูล');const rows=await r.json();return rows[0]||null;}
-async function sbInsert(ownerToken,data){const r=await fetch(API_BASE,{method:'POST',headers:sbHeaders(ownerToken),body:JSON.stringify({owner_token:ownerToken,data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Insert failed');}return(await r.json())[0];}
-async function sbUpdate(id,ownerToken,data){const r=await fetch(`${API_BASE}?id=eq.${id}`,{method:'PATCH',headers:sbHeaders(ownerToken),body:JSON.stringify({data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed');}return true;}
-async function sbDelete(id,ownerToken){const r=await fetch(`${API_BASE}?id=eq.${id}`,{method:'DELETE',headers:sbHeaders(ownerToken)});if(!r.ok){const e=await r.json();throw new Error(e.message||'Delete failed');}return true;}
+async function sbInsert(ownerToken,data){const r=await fetch(API_BASE,{method:'POST',headers:sbHeaders(),body:JSON.stringify({owner_token:ownerToken,data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Insert failed');}return(await r.json())[0];}
+async function sbUpdate(id,ownerToken,data){
+  // verify token matches before updating
+  const check=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}&select=id`,{headers:sbHeaders()});
+  const rows=await check.json();
+  if(!rows.length)throw new Error('Token ไม่ถูกต้อง');
+  const r=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}`,{method:'PATCH',headers:sbHeaders(),body:JSON.stringify({data})});
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed');}return true;}
+async function sbDelete(id,ownerToken){
+  const check=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}&select=id`,{headers:sbHeaders()});
+  const rows=await check.json();
+  if(!rows.length)throw new Error('Token ไม่ถูกต้อง');
+  const r=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}`,{method:'DELETE',headers:sbHeaders()});
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Delete failed');}return true;}
 function genToken(){return'tk_'+Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('');}
 
 // ═══════════════════════════════════════════
