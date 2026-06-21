@@ -822,23 +822,36 @@ document.getElementById('modal-confirm-del').addEventListener('click',async()=>{
   finally{hideLoading();pendingDeleteId=null;}
 });
 
-async function saveSheet(){
-  if(!currentData||!isOwner||!currentId)return;
+let _saveTimer=null;
+let _isSaving=false;
+
+async function saveSheet(silent=false){
+  if(!currentData||!isOwner||!currentId||_isSaving)return;
   collectForm();
   const entry=getIndexEntry(currentId);if(!entry?.owner_token)return;
-  setSaved(null,'กำลังบันทึก...');document.getElementById('btn-save').disabled=true;
+  _isSaving=true;
+  if(!silent){setSaved(null,'กำลังบันทึก...');document.getElementById('btn-save').disabled=true;}
+  else{setSaved(null,'💾 กำลังบันทึก...');}
   try{
     await sbUpdate(currentId,entry.owner_token,currentData);
     entry.name=currentData.name;entry.alias=currentData.alias;saveIndex();renderSidebar();setSaved(true);
   }catch(e){setSaved(false,'บันทึกไม่สำเร็จ: '+e.message);}
-  finally{document.getElementById('btn-save').disabled=false;}
+  finally{_isSaving=false;document.getElementById('btn-save').disabled=false;}
+}
+
+// debounced autosave — เซฟอัตโนมัติหลังหยุดพิมพ์ 2 วินาที
+function triggerAutosave(){
+  if(!isOwner||!currentId)return;
+  setSaved(null,'✏️ มีการเปลี่ยนแปลง...');
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(()=>saveSheet(true),2000);
 }
 
 function setSaved(saved,customText=null){
   const ind=document.getElementById('save-indicator');
   if(customText){ind.textContent=customText;ind.className='save-indicator';return;}
   if(saved===true){ind.textContent='✓ บันทึกแล้ว';ind.className='save-indicator saved';}
-  else if(saved===false){ind.textContent='มีการเปลี่ยนแปลง...';ind.className='save-indicator';}
+  else if(saved===false){ind.textContent='✏️ มีการเปลี่ยนแปลง...';ind.className='save-indicator';}
 }
 
 // ═══════════════════════════════════════════
@@ -887,7 +900,7 @@ async function checkUrlParams(){
 // ═══════════════════════════════════════════
 document.getElementById('btn-new').addEventListener('click',newCharacter);
 document.getElementById('btn-save').addEventListener('click',saveSheet);
-document.getElementById('sheet').addEventListener('input',()=>{if(isOwner)setSaved(false);});
+document.getElementById('sheet').addEventListener('input',()=>{if(isOwner)triggerAutosave();});
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveSheet();}});
 document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
 
