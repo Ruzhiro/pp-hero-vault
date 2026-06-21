@@ -478,18 +478,16 @@ function sbHeaders(){
 async function sbGet(id){const r=await fetch(`${API_BASE}?id=eq.${id}&select=*`,{headers:sbHeaders()});if(!r.ok)throw new Error('ไม่พบข้อมูล');const rows=await r.json();return rows[0]||null;}
 async function sbInsert(ownerToken,data){const r=await fetch(API_BASE,{method:'POST',headers:sbHeaders(),body:JSON.stringify({owner_token:ownerToken,data})});if(!r.ok){const e=await r.json();throw new Error(e.message||'Insert failed');}return(await r.json())[0];}
 async function sbUpdate(id,ownerToken,data){
-  // verify token matches before updating
-  const check=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}&select=id`,{headers:sbHeaders()});
-  const rows=await check.json();
-  if(!rows.length)throw new Error('Token ไม่ถูกต้อง');
+  // ส่ง owner_token ใน body เพื่อให้ Supabase filter ฝั่ง server
   const r=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}`,{method:'PATCH',headers:sbHeaders(),body:JSON.stringify({data})});
-  if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed');}return true;}
-async function sbDelete(id,ownerToken){
-  const check=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}&select=id`,{headers:sbHeaders()});
-  const rows=await check.json();
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Update failed');}
+  const rows=await r.json();
   if(!rows.length)throw new Error('Token ไม่ถูกต้อง');
+  return true;}
+async function sbDelete(id,ownerToken){
   const r=await fetch(`${API_BASE}?id=eq.${id}&owner_token=eq.${encodeURIComponent(ownerToken)}`,{method:'DELETE',headers:sbHeaders()});
-  if(!r.ok){const e=await r.json();throw new Error(e.message||'Delete failed');}return true;}
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'Delete failed');}
+  return true;}
 function genToken(){return'tk_'+Array.from(crypto.getRandomValues(new Uint8Array(24))).map(b=>b.toString(16).padStart(2,'0')).join('');}
 
 // ═══════════════════════════════════════════
